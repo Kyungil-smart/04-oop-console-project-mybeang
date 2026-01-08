@@ -1,18 +1,18 @@
-﻿public class Potion : Item, IInteractable
+﻿public class IncHp : Item, IInteractable
 {
-    public Potion() => Init();
+    public IncHp() => Init();
     
     public override void Init()
     {
         Id = 0;
-        Name = "Heal Potion";
-        Description = "Heal 1 Health Point";
+        Name = "";
+        Description = "Increase Max Health Point";
     }
 
     public override void Use()
     {
         Logger.Debug($"[ITEM] {Name}: {Description}");
-        Owner.Heal(1);
+        Owner.PlusMaxHp(1);
         Owner = null;
     }
 

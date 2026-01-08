@@ -16,7 +16,7 @@
         Random rnd = new Random();
         Item[] GivenItems = new Item[]
         {
-            new Potion()
+            new Potion(), new IncHp(), new IncRange(), new IncDamage()
         };
         while (true)
         {
@@ -52,6 +52,7 @@
         _items[_itemMenu.CurrentIndex].Use();
         _items = [];
         _itemMenu.RemoveAll();
+        GameManager.IsPaused = false;
     }
     
     public void Render()
