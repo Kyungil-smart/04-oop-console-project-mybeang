@@ -1,1 +1,16 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=22157905&assignment_repo_type=AssignmentRepo)
+# OOP Project - OOP 기반 Console 게임 제작 프로젝트
+
+## (제목 미정)
+
+## 게임 내용
+
+- 장르: 스테이지 기반 뱀파이벌서바이벌류
+
+## 조작법
+> 아래 내용 추후 이미지로 제공 예정
+
+- 키보드 화살표 (↑, →, ←, ↓) 기반 플레이어 조작
+- 자동 Bullet 발사
+- 아이템 선택시 Enter 조작
+
+
