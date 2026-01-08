@@ -31,13 +31,14 @@
         IsGameOver = false;
         _player = new PlayerCharactor();
         
+        SceneManager.StageNumber = 1;
         SceneManager.Add(SceneName.Title, new TitleScene());
         SceneManager.Add(SceneName.Story, new StoryScene());
         SceneManager.Add(SceneName.Stage, new StageScene(_player));
         SceneManager.Add(SceneName.Credits, new CreditsScene());
         SceneManager.Add(SceneName.GameOver, new GameOverScene());
         SceneManager.Add(SceneName.Log, new LogScene());
-
+        
         SceneManager.OnChangeScene += InputManager.Reset;
         SceneManager.Change(SceneName.Title);
     }

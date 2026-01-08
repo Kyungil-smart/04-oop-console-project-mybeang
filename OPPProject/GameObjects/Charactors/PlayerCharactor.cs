@@ -21,7 +21,7 @@ public class PlayerCharactor : Charactor
         _damage.Value = 1;
         _range.Value = 4;
         
-        Symbol = '㉾';
+        Symbol = 'P';
         Type = GameObjectType.Chracter;
         Color = ConsoleColor.Blue;
     }
@@ -44,8 +44,10 @@ public class PlayerCharactor : Charactor
             }
         }
         
-        Map[Position.Y, Position.X].OnTileObject = null;
-        Map[nextPos.Y, nextPos.X].OnTileObject = this;
+        // Map[Position.Y, Position.X].OnTileObject = null;
+        // Map[nextPos.Y, nextPos.X].OnTileObject = this;
+        Map[Position.Y, Position.X].StepOff();
+        Map[nextPos.Y, nextPos.X].StepOn(this);
         Position = nextPos;
     }
 
@@ -92,13 +94,13 @@ public class PlayerCharactor : Charactor
     public void OpenTreasureBox(Item item)
     {
         _treasureBox.Owner = this;
-        _treasureBox.Render();
         GameManager.IsPaused = true;
+        _treasureBox.Render();
     }
 
     public void Render()
     {
-        _treasureBox.Render();
+        // _treasureBox.Render();
     }
 
     public void DrawHealthGauge()

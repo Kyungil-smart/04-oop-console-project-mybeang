@@ -15,6 +15,7 @@ public static class SceneManager
     public static Action OnChangeScene;
     public static Scene Current { get; private set; }
     private static Scene _prev;
+    public static int StageNumber { get; set; }
     
     private static Dictionary<SceneName, Scene> _scenes = new Dictionary<SceneName, Scene>();
 

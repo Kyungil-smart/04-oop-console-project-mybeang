@@ -5,6 +5,6 @@
     {
         Type = GameObjectType.Chracter;
         Color = ConsoleColor.Green;
-        Symbol = '/';
+        Symbol = ',';
     }
 }

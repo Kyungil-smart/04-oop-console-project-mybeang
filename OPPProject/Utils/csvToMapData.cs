@@ -2,11 +2,11 @@
 
 public class csvToMapData
 {
-    public static string[,] ToArray()
+    public static string[,] ToArray(int stage)
     {
         string[,] map =  new string[40, 40];
         string csvString = "";
-        string path = Path.Combine(Environment.CurrentDirectory, "./Data/stage1.csv");
+        string path = Path.Combine(Environment.CurrentDirectory, $"./Data/stage{stage}.csv");
         using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.None))
         {
             byte[] csvBytes = new byte[fs.Length];
