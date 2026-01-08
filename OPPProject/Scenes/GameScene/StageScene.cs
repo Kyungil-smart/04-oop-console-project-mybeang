@@ -3,7 +3,7 @@
     public int Width = 40;  // Caution! Map Data 크기와 주의하자.
     public int Height = 40;  // Caution! Map Data 크기와 주의하자.
     public int RenderWidth = 20;
-    public int RenderHeight = 20;
+    public int RenderHeight = 10;
     
     private Tile[,] _map;
     private PlayerCharactor _player;
@@ -54,19 +54,33 @@
     {
         int minRenderWidth = _player.Position.Y - RenderWidth / 2;
         int maxRenderWidth = _player.Position.Y + RenderWidth / 2;
+        if (minRenderWidth < 0)
+        {
+            maxRenderWidth -= minRenderWidth;
+            minRenderWidth = 0;
+        }
+        else if (maxRenderWidth > Width)
+        {
+            minRenderWidth -= (maxRenderWidth - Width) ;
+            maxRenderWidth = Width;
+        }
+        
         int minRenderHeight = _player.Position.X - RenderHeight / 2;
         int maxRenderHeight = _player.Position.X + RenderHeight / 2;
-        // for (int i = minRenderHeight; i < maxRenderHeight ; i++)
-        // {
-        //     for (int j = minRenderWidth; j < maxRenderWidth; j++)
-        //     {
-        //         _map[j, i].Print();
-        //     }
-        //     Console.WriteLine();
-        // }
-        for (int i = 0; i < Height ; i++)
+        if (minRenderHeight < 0)
         {
-            for (int j = 0; j < Width; j++)
+            maxRenderHeight -= minRenderHeight;
+            minRenderHeight = 0;
+        }
+        else if (maxRenderHeight > Height)
+        {
+            minRenderHeight -= (maxRenderHeight - Height) ;
+            maxRenderHeight = Height;
+        }
+        
+        for (int i = minRenderHeight; i < maxRenderHeight; i++)
+        {
+            for (int j = minRenderWidth; j < maxRenderWidth; j++)
             {
                 _map[j, i].Print();
             }

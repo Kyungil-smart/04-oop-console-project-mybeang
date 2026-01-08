@@ -44,8 +44,7 @@ public class PlayerCharactor : Charactor
             }
         }
         
-        // Map[Position.Y, Position.X].OnTileObject = null;
-        // Map[nextPos.Y, nextPos.X].OnTileObject = this;
+        Logger.Debug($"player pos: [{Position.X}, {Position.Y}]");
         Map[Position.Y, Position.X].StepOff();
         Map[nextPos.Y, nextPos.X].StepOn(this);
         Position = nextPos;
