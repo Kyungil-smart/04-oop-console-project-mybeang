@@ -19,6 +19,6 @@
 
     public void Interact(PlayerCharactor player)
     {
-        player.GetItem(this);
+        player.OpenTreasureBox(this);
     }
 }

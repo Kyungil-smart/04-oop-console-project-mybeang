@@ -6,19 +6,12 @@ public class PlayerCharactor : Charactor
     public ObservableProperty<int> Mana = new ObservableProperty<int>();
     public PlayerCharactor() => Init();
     public Tile[,] Map { get; set; }
-    private Inventory _inventory;
+    private TreasureBox _treasureBox;
     
     public override void Init()
     {
         Symbol = 'P';
         Type = GameObjectType.Chracter;
-        _inventory = new(this);
-        _inventory.IsOpened = false;
-        
-        _inventory.Add(new Potion());
-        _inventory.Add(new Potion());
-        _inventory.Add(new Potion());
-        _inventory.Add(new Potion());
     }
 
     private void Move(Vector2 direction)
@@ -63,54 +56,46 @@ public class PlayerCharactor : Charactor
         {
             direction = Vector2.Down;
         }
-        if (InputManager.GetKey(ConsoleKey.I))
-        {
-            _inventory.IsOpened = true;
-            Render();
-        }
         if (Map != null) Move(direction);
     }
 
-    private void ControlInventory()
+    private void ControlItemSelect()
     {
         if (InputManager.GetKey(ConsoleKey.UpArrow))
         {
-            _inventory.CursorUp();
+            _treasureBox.CursorUp();
         }
         if (InputManager.GetKey(ConsoleKey.DownArrow))
         {
-            _inventory.CursorDown();
+            _treasureBox.CursorDown();
         }
         if (InputManager.GetKey(ConsoleKey.Enter))
         {
-            _inventory.Select();
-        }
-        if (InputManager.GetKey(ConsoleKey.I))
-        {
-            _inventory.IsOpened = false;
+            _treasureBox.Select();
         }
     }
     
     public override void Update()
     {
-        if (!_inventory.IsOpened)
+        if (!GameManager.IsPaused)
         {
             ControlPlayer();
         } 
-        else if (_inventory.IsOpened)
+        else if (!GameManager.IsPaused)
         {
-            ControlInventory();
+            ControlItemSelect();
         }
     }
 
-    public void GetItem(Item item)
+    public void OpenTreasureBox(Item item)
     {
-        _inventory.Add(item);
+        _treasureBox.Owner = this;
+        _treasureBox.Render();
     }
 
     public void Render()
     {
-        _inventory.Render();
+        _treasureBox.Render();
     }
 
     public void DrawHealthGauge()

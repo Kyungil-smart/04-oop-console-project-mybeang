@@ -2,6 +2,7 @@
 {
     public static bool IsGameOver { get; private set; }
     public const string GameName = "Explore Console World";
+    public static bool IsPaused { get; set; }
     
     private PlayerCharactor _player;
     
@@ -26,6 +27,7 @@
 
     private void Init()
     {
+        IsPaused = false;
         IsGameOver = false;
         _player = new PlayerCharactor();
         

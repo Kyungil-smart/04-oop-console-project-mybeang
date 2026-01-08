@@ -58,21 +58,10 @@
         _outline.Height++;
     }
 
-    public void RemoveCurrentIndex()
+    public void RemoveAll()
     {
-        _menus.RemoveAt(_currentIndex);
-        _currentIndex--;
-
-        // box resizing
-        int max = 0;
-        foreach ((string text, Action action) in _menus)
-        {
-            int textWidth = text.GetTextWidth();
-            if (max < textWidth) max = textWidth;
-        }
-        if (_maxLength > max) _maxLength = max;
-        _outline.Width = _maxLength + 6;
-        _outline.Height--;
+        _menus = new List<(string text, Action action)>();
+        _currentIndex = 0;
     }
 
     public void CursorUp()
@@ -91,6 +80,11 @@
         Logger.Debug($"down {_currentIndex}:{_menus.Count}");
     }
 
+    public void Render(Vector2 position)
+    {
+        Render(position.X, position.Y);
+    }
+    
     public void Render(int x, int y)
     {
         _outline.X = x;

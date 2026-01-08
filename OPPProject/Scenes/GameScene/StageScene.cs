@@ -1,7 +1,5 @@
 ﻿public class StageScene : Scene
 {
-    private int _width = 20;
-    private int _height = 20;
     private Tile[,] _map;
     private PlayerCharactor _player;
     
@@ -9,11 +7,11 @@
     
     public void Init(PlayerCharactor p)
     {
-        _map = new Tile[_height, _width];
+        _map = new Tile[Height, Width];
         _player = p;
-        for (int i = 0; i < _height; i++)
+        for (int i = 0; i < Height; i++)
         {
-            for (int j = 0; j < _width; j++)
+            for (int j = 0; j < Width; j++)
             {
                 _map[j, i] = new Tile(null, new Vector2(j, i));
             }
@@ -45,9 +43,9 @@
     
     private void RenderMap()
     {
-        for (int i = 0; i < _height; i++)
+        for (int i = 0; i < RenderHeight; i++)
         {
-            for (int j = 0; j < _width; j++)
+            for (int j = 0; j < RenderWidth; j++)
             {
                 _map[j, i].Print();
             }
