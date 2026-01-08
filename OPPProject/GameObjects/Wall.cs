@@ -4,5 +4,6 @@
     {
         Symbol = 'W';
         Type = GameObjectType.Wall;
+        Color = ConsoleColor.White;
     }
 }

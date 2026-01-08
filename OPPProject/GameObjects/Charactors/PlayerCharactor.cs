@@ -21,8 +21,9 @@ public class PlayerCharactor : Charactor
         _damage.Value = 1;
         _range.Value = 4;
         
-        Symbol = 'P';
+        Symbol = '㉾';
         Type = GameObjectType.Chracter;
+        Color = ConsoleColor.Blue;
     }
 
     protected override void Move(Vector2 direction)

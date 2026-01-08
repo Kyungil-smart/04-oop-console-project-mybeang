@@ -1,5 +1,10 @@
 ﻿public class StageScene : Scene
 {
+    public int Width = 40;
+    public int Height = 40;
+    public int RenderWidth = 20;
+    public int RenderHeight = 20;
+    
     private Tile[,] _map;
     private PlayerCharactor _player;
     
@@ -9,6 +14,7 @@
     {
         _map = new Tile[Height, Width];
         _player = p;
+        // Real Map Init
         for (int i = 0; i < Height; i++)
         {
             for (int j = 0; j < Width; j++)
@@ -20,7 +26,7 @@
     public override void Enter()
     {
         _player.Map = _map;
-        _player.Position = new Vector2(1, 1);
+        _player.Position = new Vector2(Width / 2, Height / 2);
         _map[_player.Position.Y, _player.Position.X].OnTileObject = _player;
     }
 
