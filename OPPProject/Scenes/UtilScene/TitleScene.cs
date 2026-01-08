@@ -52,7 +52,8 @@
 
     public void GameQuit()
     {
-        SceneManager.Change(SceneName.GameOver);
+        GameManager.GameOver();
+        Console.WriteLine("\n\nGoodbye...\n\n");
     }
 
     public void GameStart()
@@ -62,6 +63,6 @@
 
     public void ViewCredits()
     {
-        // SceneManager.ChangeScene(SceneName.Credits);
+        SceneManager.Change(SceneName.Credits);
     }
 }

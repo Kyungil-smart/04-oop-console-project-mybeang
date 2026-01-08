@@ -19,4 +19,9 @@
     {
         return new Vector2(a.X * b, a.Y * b);
     }
+
+    public string ToString()
+    {
+        return $"[{X}, {Y}]";
+    }
 }

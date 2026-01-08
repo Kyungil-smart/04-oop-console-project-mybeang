@@ -69,7 +69,6 @@
         _currentIndex--;
         if (_currentIndex < 0) 
             _currentIndex = 0;
-        Logger.Debug($"up {_currentIndex}:{_menus.Count}");
     }
 
     public void CursorDown()
@@ -77,7 +76,6 @@
         _currentIndex++;
         if(_currentIndex >= _menus.Count) 
             _currentIndex = _menus.Count - 1;
-        Logger.Debug($"down {_currentIndex}:{_menus.Count}");
     }
 
     public void Render(Vector2 position)
