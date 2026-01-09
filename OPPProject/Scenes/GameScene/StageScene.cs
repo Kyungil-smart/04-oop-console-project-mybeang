@@ -2,15 +2,15 @@
 {
     public int Width = 40;  // Caution! Map Data 크기와 주의하자.
     public int Height = 40;  // Caution! Map Data 크기와 주의하자.
-    public int RenderWidth = 20;
-    public int RenderHeight = 10;
+    public int RenderWidth = 25;
+    public int RenderHeight = 15;
     
     private Tile[,] _map;
-    private PlayerCharactor _player;
+    private Player _player;
     
-    public StageScene(PlayerCharactor p) => Init(p);
+    public StageScene(Player p) => Init(p);
     
-    public void Init(PlayerCharactor p)
+    public void Init(Player p)
     {
         _map = new Tile[Height, Width];
         _player = p;

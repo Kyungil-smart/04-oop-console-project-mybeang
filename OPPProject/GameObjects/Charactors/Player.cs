@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-public class PlayerCharactor : Charactor
+public class Player : Charactor
 {
     private const int MaxHealth = 5;
     private const int MaxDamage = 5;
@@ -10,7 +10,7 @@ public class PlayerCharactor : Charactor
     private ObservableProperty<int> _manaPoint = new ObservableProperty<int>();
     private ObservableProperty<int> _range = new ObservableProperty<int>();
     private ObservableProperty<int> _damage = new ObservableProperty<int>();
-    public PlayerCharactor() => Init();
+    public Player() => Init();
     public Tile[,] Map { get; set; }
     private TreasureBox _treasureBox;
     

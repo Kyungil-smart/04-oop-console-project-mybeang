@@ -16,7 +16,7 @@
         Owner = null;
     }
 
-    public void Interact(PlayerCharactor player)
+    public void Interact(Player player)
     {
         player.OpenTreasureBox(this);
     }

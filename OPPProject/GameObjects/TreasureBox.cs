@@ -3,7 +3,7 @@
     private Item[] _items = new Item[2];
     private Item _choicedItem;
     public MenuList _itemMenu = new();
-    public PlayerCharactor Owner;
+    public Player Owner;
 
     public TreasureBox()
     {

@@ -4,7 +4,7 @@
     public const string GameName = "Explore Console World";
     public static bool IsPaused { get; set; }
     
-    private PlayerCharactor _player;
+    private Player _player;
     
     public void Run()
     {
@@ -29,7 +29,7 @@
     {
         IsPaused = false;
         IsGameOver = false;
-        _player = new PlayerCharactor();
+        _player = new Player();
         
         SceneManager.StageNumber = 1;
         SceneManager.Add(SceneName.Title, new TitleScene());
