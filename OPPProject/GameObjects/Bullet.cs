@@ -1,4 +1,8 @@
-﻿public class Bullet : GameObject
+﻿/*
+ * bullet 에 lifeTime 을 주어, frame 에 맞춘 lifeTime 의 감소로 자체 소멸을 하고 싶었는데,
+ * 마땅히 아이디어가 현재 떠오르지 않아 bullet 에 대한 소멸을 player 에서 제어하게 되었음.
+*/ 
+public class Bullet : GameObject
 {
     private Player _player;
     public int Damage;

@@ -13,11 +13,10 @@
     private TreasureBox _treasureBox;
     private Direction _direction;
     private List<Bullet> _bullets;
-    
+
     public override void Init()
     {
-        _maxHealth.Value = 1;
-        _curHealth.Value = 1;
+        Health.Value = new Hp(1, 1);
         _damage = 1;
         _range = 4;
         _direction = Direction.Down;
@@ -140,25 +139,25 @@
         // 왼쪽위 UI 에 그릴껀데...?
     }
 
-    public void Heal(int point)
+    public void Heal()
     {
-        if (_curHealth.Value == _maxHealth.Value) return;
-        _curHealth.Value += point;
+        if (Health.Value.Current == Health.Value.Total) return;
+        Health.Value = Health.Value with { Current = Health.Value.Current + 1 };
     }
-    public void PlusDamage(int point)
+    public void PlusDamage()
     {
         if (_damage >= MaxDamage) return;
-        _damage += point;
+        _damage++;
     }
-    public void PlusMaxRange(int point)
+    public void PlusMaxRange()
     {
         if (_range >= MaxRange) return;
-        _range += point;
+        _range++;
     }
-    public void PlusMaxHp(int point)
+    public void PlusMaxHp()
     {
-        if (_maxHealth.Value >= MaxHealth) return;
-        _maxHealth.Value += point;
+        if (Health.Value.Total >= MaxHealth) return;
+        Health.Value = Health.Value with { Total = Health.Value.Total + 1 };
     }
     public void HealMana(int point)
     {

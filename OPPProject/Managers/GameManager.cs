@@ -20,7 +20,6 @@
             {
                 SceneManager.Change(SceneName.Log);
             }
-            
             SceneManager.Update();
         }
     }

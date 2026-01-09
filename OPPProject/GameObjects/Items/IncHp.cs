@@ -12,7 +12,7 @@
     public override void Use()
     {
         Logger.Debug($"[ITEM] {Name}: {Description}");
-        Owner.PlusMaxHp(1);
+        Owner.PlusMaxHp();
         Owner = null;
     }
 

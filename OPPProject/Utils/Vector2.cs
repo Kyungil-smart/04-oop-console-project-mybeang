@@ -20,7 +20,7 @@
         return new Vector2(a.X * b, a.Y * b);
     }
 
-    public string ToString()
+    public override string ToString()
     {
         return $"[{X}, {Y}]";
     }

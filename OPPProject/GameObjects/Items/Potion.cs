@@ -12,7 +12,7 @@
     public override void Use()
     {
         Logger.Debug($"[ITEM] {Name}: {Description}");
-        Owner.Heal(1);
+        Owner.Heal();
         Owner = null;
     }
 

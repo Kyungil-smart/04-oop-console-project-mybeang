@@ -7,12 +7,14 @@
     
     private Tile[,] _map;
     private Player _player;
+    private TopUI _topUI;
     
     public StageScene(Player p) => Init(p);
     
     public void Init(Player p)
     {
         _map = new Tile[Height, Width];
+        _topUI = new TopUI();
         _player = p;
     }
     public override void Enter()
@@ -31,6 +33,7 @@
         _player.Map = _map;
         _player.Position = new Vector2(Width / 2, Height / 2);
         _map[_player.Position.Y, _player.Position.X].OnTileObject = _player;
+        _player.Health.AddListener(_topUI.Render);
     }
 
     public override void Update()
@@ -42,12 +45,14 @@
     {
         RenderMap();
         _player.Render();
+        _topUI.Render(_player.Health.Value);
     }
 
     public override void Exit()
     {
         _map[_player.Position.Y, _player.Position.X].OnTileObject = null;
         _player.Map = null;
+        _player.Health.RemoveListener(_topUI.Render);
     }
     
     private void RenderMap()
