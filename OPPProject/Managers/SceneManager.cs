@@ -1,16 +1,4 @@
-﻿public enum SceneName
-{
-    Void,
-    Title,
-    GameOver,
-    Story,
-    Credits,
-    Stage,
-    Log,
-}
-
-
-public static class SceneManager
+﻿public static class SceneManager
 {
     public static Action OnChangeScene;
     public static Scene Current { get; private set; }
