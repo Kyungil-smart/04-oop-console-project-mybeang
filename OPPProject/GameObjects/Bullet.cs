@@ -25,7 +25,6 @@ public class Bullet : GameObject
     {
         Symbol = '*';
         Color = ConsoleColor.Yellow;
-        Type = GameObjectType.Chracter;
         Map[Position.Y, Position.X].StepOn(this);
     }
     

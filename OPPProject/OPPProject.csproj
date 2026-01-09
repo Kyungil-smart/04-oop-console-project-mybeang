@@ -12,6 +12,10 @@
       <Content Include="Data\stage1.csv">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <None Remove="Data\enermies.csv" />
+      <Content Include="Data\enermies.csv">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>

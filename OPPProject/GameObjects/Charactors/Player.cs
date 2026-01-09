@@ -22,7 +22,6 @@
         _direction = Direction.Down;
         
         Symbol = 'P';
-        Type = GameObjectType.Chracter;
         Color = ConsoleColor.Blue;
         _bullets = new();
     }
@@ -167,24 +166,22 @@
 
     public void ShootBullet()
     {
-        // 일단 가던 방향으로만 쏘자.
-        // 일단 특정 키 입력시 쏘게 하자.
         Vector2 bulletPos = new Vector2(Position.X, Position.Y);
-        switch (_direction)
-        {
-            case Direction.Up:
-                bulletPos += Vector2.Up;
-                break;
-            case Direction.Down:
-                bulletPos += Vector2.Down;
-                break;
-            case Direction.Left:
-                bulletPos += Vector2.Left;
-                break;
-            default:  // Right
-                bulletPos += Vector2.Right;
-                break;
-        }
+        
+        if (_direction == Direction.Up) 
+            bulletPos += Vector2.Up;
+        else if (_direction == Direction.Down) 
+            bulletPos += Vector2.Down;
+        else if (_direction == Direction.Left) 
+            bulletPos += Vector2.Left;
+        else 
+            bulletPos += Vector2.Right;
+        
         _bullets.Add(new Bullet(this, bulletPos, _damage, _range, _direction));
+    }
+    
+    public void TakeDamage()
+    {
+        Health.Value = Health.Value with { Current = Health.Value.Current - 1 };
     }
 }

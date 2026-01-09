@@ -4,7 +4,6 @@
     public ConsoleColor Color { get; set; }
     public Vector2 Position { get; set; }
     public Tile[,] Map { get; set; }
-    public GameObjectType Type { get; set; }
     
     public abstract void Init();
 

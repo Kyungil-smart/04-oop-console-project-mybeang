@@ -6,14 +6,6 @@
     Right,
 }
 
-public enum GameObjectType
-{
-    Chracter,
-    Item,
-    Wall,
-    Grass,
-    Bullet,
-}
 
 public enum SceneName
 {
@@ -24,4 +16,5 @@ public enum SceneName
     Credits,
     Stage,
     Log,
+    Victory,
 }

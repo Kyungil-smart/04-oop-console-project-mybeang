@@ -1,9 +1,14 @@
-﻿public class Wall : GameObject
+﻿public class Wall : GameObject, ICrashBullet
 {
     public override void Init()
     {
         Symbol = 'W';
-        Type = GameObjectType.Wall;
         Color = ConsoleColor.White;
+    }
+
+
+    public void CrashBullet(Bullet bullet)
+    {
+        bullet.Disappear();
     }
 }

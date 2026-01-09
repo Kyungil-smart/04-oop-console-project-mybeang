@@ -12,11 +12,7 @@
     {
         if (InputManager.GetKey(ConsoleKey.Enter))
         {
-            GameManager.GameOver();
-        }
-        else
-        {
-            GameManager.GameOver();
+            SceneManager.Change(SceneName.Title);
         }
     }
 
@@ -25,6 +21,6 @@
         Console.SetCursorPosition(5, 5);
         "Game Over".Print(ConsoleColor.Magenta);
         Console.SetCursorPosition(5, 7);
-        "Please Pres any key to continue..".Print(ConsoleColor.Gray);
+        "Please Pres Enter key to continue..".Print(ConsoleColor.Gray);
     }
 }

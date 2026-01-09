@@ -7,6 +7,7 @@
     
     private Tile[,] _map;
     private Player _player;
+    private List<Enermy> _enermies;
     private TopUI _topUI;
     
     public StageScene(Player p) => Init(p);
@@ -14,12 +15,15 @@
     public void Init(Player p)
     {
         _map = new Tile[Height, Width];
-        _topUI = new TopUI();
+        _topUI = new TopUI(RenderWidth);
         _player = p;
+        _enermies = new List<Enermy>();
     }
+    
     public override void Enter()
     {
-        string[,] mapData = csvToMapData.ToArray(SceneManager.StageNumber);
+        // Setting Map
+        string[,] mapData = csvToData.GetMap(SceneManager.StageNumber);
         for (int i = 0; i < Height; i++)
         {
             for (int j = 0; j < Width; j++)
@@ -30,29 +34,67 @@
                     _map[j, i] = new Tile(null, new Vector2(j, i));
             }
         }
+        
+        // Setting Player
         _player.Map = _map;
         _player.Position = new Vector2(Width / 2, Height / 2);
         _map[_player.Position.Y, _player.Position.X].OnTileObject = _player;
-        _player.Health.AddListener(_topUI.Render);
+        _player.Health.AddListener(_topUI.PlayerHpRender);
+        
+        // Setting Enermy
+        List<int> enermyLevels = csvToData.GetEnermy(SceneManager.StageNumber);
+        foreach (int level in enermyLevels)
+        {
+            Enermy e = new Enermy();
+            e.SetLevel(level);
+            e.Health.AddListener(_topUI.EnermyHpRender);
+            _enermies.Add(e);
+        }
     }
 
     public override void Update()
     {
         _player.Update();
+        if (_player.Health.Value.Current <= 0)
+        {
+            SceneManager.Change(SceneName.GameOver);
+        }
+
+        if (_enermies.Count <= 0)
+        {
+            if (SceneManager.StageNumber < 5)
+            {
+                SceneManager.StageNumber++;
+            }
+            else
+            {
+                SceneManager.Change(SceneName.Victory);
+            }
+        }
     }
 
     public override void Render()
     {
         RenderMap();
         _player.Render();
-        _topUI.Render(_player.Health.Value);
+        _topUI.PlayerHpRender(_player.Health.Value);
     }
 
     public override void Exit()
     {
         _map[_player.Position.Y, _player.Position.X].OnTileObject = null;
         _player.Map = null;
-        _player.Health.RemoveListener(_topUI.Render);
+        _player.Health.RemoveListener(_topUI.PlayerHpRender);
+    }
+
+    private void PopUpEnermy()
+    {
+        // 데이터에 맞춰서 진행.
+    }
+
+    private void PopUpTreasure()
+    {
+        // 무야호
     }
     
     private void RenderMap()

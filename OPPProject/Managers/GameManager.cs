@@ -36,6 +36,7 @@
         SceneManager.Add(SceneName.Stage, new StageScene(_player));
         SceneManager.Add(SceneName.Credits, new CreditsScene());
         SceneManager.Add(SceneName.GameOver, new GameOverScene());
+        SceneManager.Add(SceneName.Victory, new VictoryScene());
         SceneManager.Add(SceneName.Log, new LogScene());
         
         SceneManager.OnChangeScene += InputManager.Reset;
