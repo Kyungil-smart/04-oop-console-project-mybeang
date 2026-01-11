@@ -5,7 +5,7 @@
     public override void Init()
     {
         Id = 0;
-        Name = "HP +1";
+        Name = "HP를 1 증가";
         Description = "Increase Max Health Point";
     }
 

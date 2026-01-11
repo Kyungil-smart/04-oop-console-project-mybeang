@@ -1,13 +1,20 @@
 ﻿public class MenuList
 {
+    private string _title;
     private List<(string text, Action action)> _menus;
     private int _currentIndex;
     private Ractangle _outline;
     private int _maxLength;
     public int CurrentIndex { get { return _currentIndex; } }
 
-    public MenuList(params (string, Action)[] menuTexts)
+    public MenuList(string title = "", params (string, Action)[] menuTexts)
     {
+        _title = title;
+        int height = 0;
+        if (title.Length > 0)
+        {
+            _maxLength = title.GetTextWidth();
+        }
         if (menuTexts.Length == 0)
         {
             _menus = new List<(string, Action)>();
@@ -26,8 +33,12 @@
                 _maxLength = textWidth;
             }
         }
-
-        _outline = new Ractangle(width: _maxLength + 4, height: _menus.Count + 2);
+        height = _menus.Count;
+        if (title.GetTextWidth() > 0)
+        {
+            height += 2;
+        }
+        _outline = new Ractangle(width: _maxLength + 4, height: height + 2);
     }
 
     public void Reset()
@@ -80,14 +91,26 @@
 
     public void Render(Vector2 position)
     {
-        Render(position.X, position.Y);
+        Render(position.Y, position.X);
     }
     
     public void Render(int x, int y)
     {
+        Logger.Debug($"버프메뉴 좌표 [{x}, {y}]");
         _outline.X = x;
         _outline.Y = y;
         _outline.Draw();
+
+        if (_title.Length > 0)
+        {
+            Console.SetCursorPosition(x + 1, ++y);
+            _title.Print();
+            Console.SetCursorPosition(x + 1, ++y);
+            for (int i = 0; i < _outline.Width - 2; i++)
+            {
+                "=".Print();
+            }
+        }
         
         for(int i = 0; i < _menus.Count; i++)
         {

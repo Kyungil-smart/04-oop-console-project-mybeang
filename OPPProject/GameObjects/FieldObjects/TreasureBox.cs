@@ -2,7 +2,7 @@
 {
     private Item[] _items = new Item[2];
     private Item _choicedItem;
-    public MenuList _itemMenu = new();
+    public MenuList _itemMenu;
     private Player _player;
     public bool IsOpenedBox;
 
@@ -15,6 +15,7 @@
 
     public override void Init()
     {
+        _itemMenu = new MenuList(title: "> 버프 1개 선택");
         for (int i = 0; i < _items.Length; i++)
         {
             _items[i] = ChoiceItem();

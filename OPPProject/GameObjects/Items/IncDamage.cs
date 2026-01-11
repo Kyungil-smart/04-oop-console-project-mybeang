@@ -5,7 +5,7 @@
     public override void Init()
     {
         Id = 0;
-        Name = "Damage +1";
+        Name = "데미지를 1 증가";
         Description = "Increase the Damage to 1 point.";
     }
 

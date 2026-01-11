@@ -5,7 +5,7 @@
     public override void Init()
     {
         Id = 0;
-        Name = "Range +1";
+        Name = "사정거리를 1 증가";
         Description = "Increase Shoot Range";
     }
 

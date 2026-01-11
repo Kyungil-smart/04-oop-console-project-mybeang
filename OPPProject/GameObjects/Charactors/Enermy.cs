@@ -22,11 +22,13 @@
     
     public void Interact(Player player)
     {
+        // 플레이어가 데미지를 입는다.
         player.TakeDamage();
     }
 
     public void CrashBullet(Bullet bullet)
     {
+        // 몬스터가 데미지를 입는다.
         TakeDamage(bullet.Damage);
     }
 
