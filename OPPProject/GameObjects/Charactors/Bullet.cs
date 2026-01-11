@@ -49,8 +49,17 @@ public class Bullet : GameObject
         if (Map.IsOutOfMap(nxtPos))
             return;
         
-        Map[Position.Y, Position.X].StepOff();
-        Map[nxtPos.Y, nxtPos.X].StepOn(this);
+        GameObject nextTileObject = Map.GetObject(nxtPos);
+        if (nextTileObject != null)
+        {
+            if (nextTileObject is ICrashBullet)
+            {
+                (nextTileObject as ICrashBullet).CrashBullet(this);
+            }
+        }
+        
+        Map.UnsetObject(this);
+        Map.SetObject(nxtPos, this);
         Position = nxtPos;
         Range--;
     }

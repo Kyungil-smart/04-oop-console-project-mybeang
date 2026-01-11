@@ -1,18 +1,13 @@
-﻿public enum ItemType
-{
-    Potion,
-    Weapon,
-    Ammor
-}
-
-public abstract class Item : GameObject
+﻿public abstract class Item : GameObject
 {
     public int Id  { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
-    public Player Owner { get; set; }
+    protected Player _player { get; set; }
     
     public abstract void Use();
+    
+    public void SetPlayer(Player player) => _player = player;
     
     public void PrintInfo()
     {

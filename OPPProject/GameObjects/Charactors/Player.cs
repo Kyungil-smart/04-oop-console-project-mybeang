@@ -9,7 +9,7 @@
     private int _range;
     private int _damage;
     public Player() => Init();
-    private TreasureBox _treasureBox;
+    public TreasureBox InteractableTb;
     private Direction _direction;
     private List<Bullet> _bullets;
 
@@ -28,10 +28,9 @@
     protected override void Move(Vector2 direction)
     {
         Vector2 nextPos = Position + direction;
-        if (Map.IsOutOfMap(nextPos))
-            return;
+        if (Map.IsOutOfMap(nextPos)) return;
 
-        GameObject nextTileObject = Map.GetObject(nextPos.Y, nextPos.X);
+        GameObject nextTileObject = Map.GetObject(nextPos);
         if (nextTileObject != null)
         {
             if (nextTileObject is IInteractable)
@@ -39,9 +38,14 @@
                 (nextTileObject as IInteractable).Interact(this);
             }
         }
-        
-        Map[Position.Y, Position.X].StepOff();
-        Map[nextPos.Y, nextPos.X].StepOn(this);
+
+        if (GameManager.IsPaused)
+        {
+            // Pause 상태인거 알람 띄워주기
+            return;
+        }
+        Map.UnsetObject(this);
+        Map.SetObject(nextPos, this);
         Position = nextPos;
     }
 
@@ -72,24 +76,25 @@
             _direction = Direction.Down;
         }
 
-        if (InputManager.GetKey(ConsoleKey.A))
+        if (InputManager.GetKey(ConsoleKey.Z))
         {
             ShootBullet();
         }
         
         if (Map != null) Move(direction);
+        Logger.Debug($"Player:[{Position.X},{Position.Y}]");
     }
 
     private void ControlItemSelect()
     {
         if (InputManager.GetKey(ConsoleKey.UpArrow))
-            _treasureBox.CursorUp();
+            InteractableTb.CursorUp();
         
         if (InputManager.GetKey(ConsoleKey.DownArrow))
-            _treasureBox.CursorDown();
+            InteractableTb.CursorDown();
         
         if (InputManager.GetKey(ConsoleKey.Enter))
-            _treasureBox.Select();
+            InteractableTb.Select();
     }
     
     public override void Update()
@@ -112,29 +117,15 @@
         }
         
         // 보물함 내 제어시 플레이어와 적은 paused 상태.
-        else if (GameManager.IsPaused)
+        if (GameManager.IsPaused)
         {
             ControlItemSelect();
         }
     }
 
-    public void OpenTreasureBox(Item item)
-    {
-        _treasureBox.Owner = this;
-        GameManager.IsPaused = true;
-        _treasureBox.Render();
-    }
-
     public void Render()
     {
-        // _treasureBox.Render();
         
-    }
-
-    public void DrawHealthGauge()
-    {
-        // FIXME: 나중에 구현
-        // 왼쪽위 UI 에 그릴껀데...?
     }
 
     public void Heal()

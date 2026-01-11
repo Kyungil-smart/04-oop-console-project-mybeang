@@ -44,4 +44,11 @@ public static class csvToData
         }
         return enermies;
     }
+    
+    public static int GetNumOfTreasuerBox(int stage)
+    {
+        string csvString = _OpenFile($"numOfTreasureBox.csv");
+        string[] splitedString = csvString.Split(',');
+        return int.Parse(splitedString[stage - 1]);
+    }
 }

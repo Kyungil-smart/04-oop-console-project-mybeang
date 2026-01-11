@@ -2,9 +2,9 @@
 {
     public int Width;
     public int Height;
-    public RenderWindow(int Width, int Height)
+    public RenderWindow(int width, int height)
     {
-        Width = Width;
-        Height = Height;
+        Width = width;
+        Height = height;
     }
 }

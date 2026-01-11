@@ -7,22 +7,28 @@
     private Field _field;
     private Player _player;
     private List<Enermy> _enermies;
-    private TreasureBox _treasureBox;
+    private List<TreasureBox> _treasureBoxs;
+    private int _totalNumOfTb;
     private TopUI _topUI;
+    private int _timer;
     
     public StageScene(Player p) => Init(p);
     
     public void Init(Player p)
     {
-        _renderWindow = new RenderWindow(25, 15);
+        // _renderWindow = new RenderWindow(25, 15);
+        _renderWindow = new RenderWindow(40, 40);
         _field = new Field(Height, Width);
         _topUI = new TopUI(_renderWindow.Width);
         _player = p;
         _enermies = new List<Enermy>();
+        _treasureBoxs = new List<TreasureBox>();
+        _totalNumOfTb = csvToData.GetNumOfTreasuerBox(SceneManager.StageNumber);
     }
     
     public override void Enter()
     {
+        _timer = 0;
         // Setting Map
         string[,] mapData = csvToData.GetMap(SceneManager.StageNumber);
         for (int i = 0; i < Height; i++)
@@ -39,7 +45,7 @@
         // Setting Player
         _player.Map = _field;
         _player.Position = new Vector2(Width / 2, Height / 2);
-        _field.SetObject(_player.Position.Y, _player.Position.X, _player);
+        _field.SetObject(_player);
         _player.Health.AddListener(_topUI.PlayerHpRender);
         
         // Setting Enermy
@@ -74,6 +80,12 @@
                 SceneManager.Change(SceneName.Victory);
             }
         }
+
+        if (_timer % 10 == 0) // FIXME: keyabilable 추가시 적절히 변경해야함.
+        {
+            PopUpTreasure();
+        }
+        _timer++;
     }
 
     public override void Render()
@@ -81,11 +93,19 @@
         _field.RenderForPlayer(_player, _renderWindow);
         _player.Render();
         _topUI.PlayerHpRender(_player.Health.Value);
+        if (_treasureBoxs.Count > 0)
+        {
+            foreach (TreasureBox treasureBox in _treasureBoxs)
+            {
+                if (treasureBox.IsOpenedBox)
+                    treasureBox.Render();
+            }
+        }
     }
 
     public override void Exit()
     {
-        _field.SetObject(_player.Position.Y, _player.Position.X, null);
+        _field.SetObject(_player.Position, null);
         _player.Map = null;
         _player.Health.RemoveListener(_topUI.PlayerHpRender);
     }
@@ -97,25 +117,10 @@
 
     private void PopUpTreasure()
     {
-        int x;
-        int y;
-        Random rnd = new Random();
-        // 랜덤 좌표 
-        // PopUp 조건
-        // - 해당 좌표가 현재 아래 Object 가 아닐 경우
-        while (true)
+        if (_treasureBoxs.Count <= _totalNumOfTb)
         {
-            x = rnd.Next(0, _field.Height);
-            y = rnd.Next(0, _field.Width);
-            if (_field[x, y].OnTileObject is Player ||
-                _field[x, y].OnTileObject is Enermy ||
-                _field[x, y].OnTileObject is Stone ||
-                _field[x, y].OnTileObject is Tree) 
-                continue;
-            break;
+            TreasureBox treasureBox = new TreasureBox(_field.GetRandomPosition(), _player);
+            _treasureBoxs.Add(treasureBox);    
         }
-        
-        // PopUp 시킨 후에 player 에 잊지말고 껴 넣어줘야함.
-        
     }
 }

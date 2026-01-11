@@ -48,7 +48,6 @@
             Console.Clear();
             for (int j = 0; j < _credits.Count; j++)
             {
-                Logger.Debug($"i={i} {_credits[j].pos.ToString()} {_credits[j].text}");
                 Console.SetCursorPosition(2, _credits[j].pos.X);
                 _credits[j].text.Print(_credits[j].color);
                 _credits[j] = (_credits[j].pos + Vector2.Up, _credits[j].text, _credits[j].color);

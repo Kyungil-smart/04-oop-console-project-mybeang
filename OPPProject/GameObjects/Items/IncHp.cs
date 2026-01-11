@@ -1,23 +1,18 @@
-﻿public class IncHp : Item, IInteractable
+﻿public class IncHp : Item
 {
     public IncHp() => Init();
     
     public override void Init()
     {
         Id = 0;
-        Name = "";
+        Name = "HP +1";
         Description = "Increase Max Health Point";
     }
 
     public override void Use()
     {
         Logger.Debug($"[ITEM] {Name}: {Description}");
-        Owner.PlusMaxHp();
-        Owner = null;
-    }
-
-    public void Interact(Player player)
-    {
-        player.OpenTreasureBox(this);
+        _player.PlusMaxHp();
+        _player = null;
     }
 }
