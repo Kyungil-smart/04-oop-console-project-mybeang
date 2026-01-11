@@ -38,12 +38,9 @@
     {
         for (int i = 0; i < _items.Length; i++)
         {
-            _items[i] = GetItem();    
-        }
-        foreach (var item in _items)
-        {
-            item.Owner = Owner;
-            _itemMenu.Add(item.Name, Use);
+            _items[i] = GetItem();
+            _items[i].Owner = Owner;
+            _itemMenu.Add(_items[i].Name, Use);
         }
     }
     

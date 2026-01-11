@@ -9,7 +9,6 @@
     private int _range;
     private int _damage;
     public Player() => Init();
-    public Tile[,] Map { get; set; }
     private TreasureBox _treasureBox;
     private Direction _direction;
     private List<Bullet> _bullets;
@@ -29,10 +28,10 @@
     protected override void Move(Vector2 direction)
     {
         Vector2 nextPos = Position + direction;
-        if (IsOutOfMap(Map, nextPos))
+        if (Map.IsOutOfMap(nextPos))
             return;
 
-        GameObject nextTileObject = Map[nextPos.Y, nextPos.X].OnTileObject;
+        GameObject nextTileObject = Map.GetObject(nextPos.Y, nextPos.X);
         if (nextTileObject != null)
         {
             if (nextTileObject is IInteractable)

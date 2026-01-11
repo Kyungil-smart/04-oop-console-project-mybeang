@@ -1,8 +1,8 @@
-﻿public class Wall : GameObject, ICrashBullet
+﻿public class Tree : GameObject, ICrashBullet
 {
     public override void Init()
     {
-        Symbol = 'W';
+        Symbol = 'T';
         Color = ConsoleColor.White;
     }
 

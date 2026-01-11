@@ -46,7 +46,7 @@ public class Bullet : GameObject
                 nxtPos += Vector2.Right;
                 break;
         }
-        if (IsOutOfMap(Map, nxtPos))
+        if (Map.IsOutOfMap(nxtPos))
             return;
         
         Map[Position.Y, Position.X].StepOff();

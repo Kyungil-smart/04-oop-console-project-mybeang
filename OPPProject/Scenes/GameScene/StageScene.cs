@@ -2,20 +2,21 @@
 {
     public int Width = 40;  // Caution! Map Data 크기와 주의하자.
     public int Height = 40;  // Caution! Map Data 크기와 주의하자.
-    public int RenderWidth = 25;
-    public int RenderHeight = 15;
+    private RenderWindow _renderWindow;
     
-    private Tile[,] _map;
+    private Field _field;
     private Player _player;
     private List<Enermy> _enermies;
+    private TreasureBox _treasureBox;
     private TopUI _topUI;
     
     public StageScene(Player p) => Init(p);
     
     public void Init(Player p)
     {
-        _map = new Tile[Height, Width];
-        _topUI = new TopUI(RenderWidth);
+        _renderWindow = new RenderWindow(25, 15);
+        _field = new Field(Height, Width);
+        _topUI = new TopUI(_renderWindow.Width);
         _player = p;
         _enermies = new List<Enermy>();
     }
@@ -29,16 +30,16 @@
             for (int j = 0; j < Width; j++)
             {
                 if (mapData[i, j] == "G")
-                    _map[j, i] = new Tile(new Grass(), new Vector2(j, i));
+                    _field[j, i] = new Tile(new Grass(), new Vector2(j, i));
                 else
-                    _map[j, i] = new Tile(null, new Vector2(j, i));
+                    _field[j, i] = new Tile(null, new Vector2(j, i));
             }
         }
         
         // Setting Player
-        _player.Map = _map;
+        _player.Map = _field;
         _player.Position = new Vector2(Width / 2, Height / 2);
-        _map[_player.Position.Y, _player.Position.X].OnTileObject = _player;
+        _field.SetObject(_player.Position.Y, _player.Position.X, _player);
         _player.Health.AddListener(_topUI.PlayerHpRender);
         
         // Setting Enermy
@@ -64,6 +65,8 @@
         {
             if (SceneManager.StageNumber < 5)
             {
+                // 다음 스테이지 간다는 문구 보이기 (ractangle 활용하기)
+                // Global Timer 생기면 일정 시간만 보이게....
                 SceneManager.StageNumber++;
             }
             else
@@ -75,14 +78,14 @@
 
     public override void Render()
     {
-        RenderMap();
+        _field.RenderForPlayer(_player, _renderWindow);
         _player.Render();
         _topUI.PlayerHpRender(_player.Health.Value);
     }
 
     public override void Exit()
     {
-        _map[_player.Position.Y, _player.Position.X].OnTileObject = null;
+        _field.SetObject(_player.Position.Y, _player.Position.X, null);
         _player.Map = null;
         _player.Health.RemoveListener(_topUI.PlayerHpRender);
     }
@@ -94,44 +97,25 @@
 
     private void PopUpTreasure()
     {
-        // 무야호
-    }
-    
-    private void RenderMap()
-    {
-        int minRenderWidth = _player.Position.Y - RenderWidth / 2;
-        int maxRenderWidth = _player.Position.Y + RenderWidth / 2;
-        if (minRenderWidth < 0)
+        int x;
+        int y;
+        Random rnd = new Random();
+        // 랜덤 좌표 
+        // PopUp 조건
+        // - 해당 좌표가 현재 아래 Object 가 아닐 경우
+        while (true)
         {
-            maxRenderWidth -= minRenderWidth;
-            minRenderWidth = 0;
-        }
-        else if (maxRenderWidth > Width)
-        {
-            minRenderWidth -= (maxRenderWidth - Width) ;
-            maxRenderWidth = Width;
-        }
-        
-        int minRenderHeight = _player.Position.X - RenderHeight / 2;
-        int maxRenderHeight = _player.Position.X + RenderHeight / 2;
-        if (minRenderHeight < 0)
-        {
-            maxRenderHeight -= minRenderHeight;
-            minRenderHeight = 0;
-        }
-        else if (maxRenderHeight > Height)
-        {
-            minRenderHeight -= (maxRenderHeight - Height) ;
-            maxRenderHeight = Height;
+            x = rnd.Next(0, _field.Height);
+            y = rnd.Next(0, _field.Width);
+            if (_field[x, y].OnTileObject is Player ||
+                _field[x, y].OnTileObject is Enermy ||
+                _field[x, y].OnTileObject is Stone ||
+                _field[x, y].OnTileObject is Tree) 
+                continue;
+            break;
         }
         
-        for (int i = minRenderHeight; i < maxRenderHeight; i++)
-        {
-            for (int j = minRenderWidth; j < maxRenderWidth; j++)
-            {
-                _map[j, i].Print();
-            }
-            Console.WriteLine();
-        }
+        // PopUp 시킨 후에 player 에 잊지말고 껴 넣어줘야함.
+        
     }
 }
