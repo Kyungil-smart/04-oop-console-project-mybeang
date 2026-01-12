@@ -76,17 +76,24 @@
 
         if (_emanager.IsAllKilled() && _stageStatus == StageStatus.Activated)
         {
-            SceneManager.Change(SceneName.Victory);
-            // if (SceneManager.StageNumber < 5)
-            // {
-            //     // 다음 스테이지 간다는 문구 보이기 (ractangle 활용하기)
-            //     // Global Timer 생기면 일정 시간만 보이게....
-            //     SceneManager.StageNumber++;
-            // }
-            // else
-            // {
-            //     SceneManager.Change(SceneName.Victory);
-            // }
+            // SceneManager.Change(SceneName.Victory);
+            if (SceneManager.StageNumber < 5)
+            {
+                GameManager.IsPaused = true;
+                string nxText = "Go to Next Level >>";
+                Ractangle r = new Ractangle(2, 3, nxText.Length + 2,3);
+                r.Draw();
+                Console.SetCursorPosition(3, 4);
+                nxText.Print(ConsoleColor.Magenta);
+                Thread.Sleep(5000); // 5sec
+                GameManager.IsPaused = false;
+                SceneManager.StageNumber++;
+                SceneManager.Change(SceneName.Void);
+            }
+            else
+            {
+                SceneManager.Change(SceneName.Victory);
+            }
         }
         _timer++;
     }
@@ -105,6 +112,9 @@
                     treasureBox.Render();
             }
         }
+        string curStage = $"Stage {SceneManager.StageNumber}";
+        Console.SetCursorPosition((_renderWindow.Width - curStage.Length) / 2, 0);
+        curStage.Print(ConsoleColor.Cyan);
     }
 
     public override void Exit()

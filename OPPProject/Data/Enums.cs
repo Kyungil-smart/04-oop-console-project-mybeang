@@ -17,6 +17,7 @@ public enum SceneName
     Stage,
     Log,
     Victory,
+    ICatch,
 }
 
 public enum StageStatus

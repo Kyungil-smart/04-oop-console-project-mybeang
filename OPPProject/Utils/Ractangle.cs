@@ -7,10 +7,10 @@
 
     public Ractangle(int x = 0, int y = 0, int width = 2, int height = 2)
     {
-        X = x;
-        Y = y;
-        Width = width;
-        Height = height;
+        X = x;  // 좌측 시작 위치
+        Y = y;  // 위 시작 위치
+        Width = width;  // 너비
+        Height = height;  // 높이
     }
     
     public void Draw()

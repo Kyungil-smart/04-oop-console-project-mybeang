@@ -38,6 +38,7 @@
         SceneManager.Add(SceneName.GameOver, new GameOverScene());
         SceneManager.Add(SceneName.Victory, new VictoryScene());
         SceneManager.Add(SceneName.Log, new LogScene());
+        SceneManager.Add(SceneName.Void, new VoidScene());
         
         SceneManager.OnChangeScene += InputManager.Reset;
         SceneManager.Change(SceneName.Title);
