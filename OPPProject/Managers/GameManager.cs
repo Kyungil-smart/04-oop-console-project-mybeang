@@ -30,7 +30,7 @@
         IsGameOver = false;
         _player = new Player();
         
-        SceneManager.StageNumber = 2;
+        SceneManager.StageNumber = 1;
         SceneManager.Add(SceneName.Title, new TitleScene());
         SceneManager.Add(SceneName.Story, new StoryScene());
         SceneManager.Add(SceneName.Stage, new StageScene(_player));
