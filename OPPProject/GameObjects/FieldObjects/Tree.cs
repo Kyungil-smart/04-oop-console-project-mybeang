@@ -9,6 +9,6 @@
 
     public void CrashBullet(Bullet bullet)
     {
-        bullet.Disappear();
+        bullet.Remove();
     }
 }

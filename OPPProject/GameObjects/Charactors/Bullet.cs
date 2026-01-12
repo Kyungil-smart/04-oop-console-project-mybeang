@@ -64,7 +64,7 @@ public class Bullet : GameObject
         Range--;
     }
 
-    public void Disappear()
+    public void Remove()
     {
         Map.UnsetObject(this);
     }

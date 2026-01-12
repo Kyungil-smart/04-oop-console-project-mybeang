@@ -102,7 +102,7 @@
             {
                 if (_bullets[i].Range <= 0)
                 {
-                    _bullets[i].Disappear();
+                    _bullets[i].Remove();
                     _bullets.RemoveAt(i--);
                     continue;
                 }

@@ -8,8 +8,8 @@
     private Player _player;
     private List<Enermy> _enermies;
     private List<TreasureBox> _treasureBoxs;
-    private int _totalNumOfTb;
     private TopUI _topUI;
+    private int _totalNumOfTb;
     private int _timer;
     private int _popUpEnermyIndex;
     private int _curEnermiesOnMap;
@@ -53,11 +53,10 @@
         
         // Setting Enermy
         List<int> enermyLevels = csvToData.GetEnermy(SceneManager.StageNumber);
-        _maxEnermiesOnMap = 1;
-        // _maxEnermiesOnMap = enermyLevels[0];
+        _maxEnermiesOnMap = enermyLevels[0];
         for (int i = 1; i < enermyLevels.Count - 1; i++)
         {
-            Enermy e = new Enermy(_player);
+            Enermy e = new Enermy(_player, i);
             e.SetLevel(enermyLevels[i]);
             e.Map = _field;
             e.IsAlive.AddListener(EnermyIsDead);
@@ -120,6 +119,11 @@
         _field.SetObject(_player.Position, null);
         _player.Map = null;
         _player.Health.RemoveListener(_topUI.PlayerHpRender);
+        _treasureBoxs.Clear();
+        _enermies.Clear();
+        _popUpEnermyIndex = 0;
+        _curEnermiesOnMap = 0;
+        _maxEnermiesOnMap = 0;
     }
 
     private void PopUpEnermy()
@@ -135,11 +139,12 @@
     {
         if (!alive)
             _curEnermiesOnMap--;
+        Logger.Debug($"Remain Enermy cnt {_curEnermiesOnMap}");
     }
 
     private void PopUpTreasure()
     {
-        if (_treasureBoxs.Count <= _totalNumOfTb)
+        if (_treasureBoxs.Count < _totalNumOfTb)
         {
             TreasureBox treasureBox = new TreasureBox(_field.GetRandomPosition(), _player);
             _treasureBoxs.Add(treasureBox);    
