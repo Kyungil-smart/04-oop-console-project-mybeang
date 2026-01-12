@@ -20,6 +20,22 @@
       <Content Include="Data\numOfTreasureBox.csv">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <None Remove="Data\stage2.csv" />
+      <Content Include="Data\stage2.csv">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Data\stage3.csv" />
+      <Content Include="Data\stage3.csv">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Data\stage4.csv" />
+      <Content Include="Data\stage4.csv">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Data\stage5.csv" />
+      <Content Include="Data\stage5.csv">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>
