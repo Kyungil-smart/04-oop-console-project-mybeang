@@ -1,4 +1,4 @@
-﻿public class Enermy : Charactor, IInteractable, ICrashBullet
+﻿public class Enemy : Charactor, IInteractable, ICrashBullet
 {
     private int _level;
     private Player _player;
@@ -6,7 +6,7 @@
     private int _aliveTime;
     public ObservableProperty<bool> IsAlive = new();
     
-    public Enermy(Player player, int id)
+    public Enemy(Player player, int id)
     {
         _id = id;
         _player = player;
@@ -66,7 +66,7 @@
                 return;
             }
             // 적끼리 뭉치지 말것
-            if (Map.GetObject(nxtPos) is Enermy) return;
+            if (Map.GetObject(nxtPos) is Enemy) return;
             // Pause 시 가만히 있기
             if (GameManager.IsPaused) return;
             Map.UnsetObject(this);

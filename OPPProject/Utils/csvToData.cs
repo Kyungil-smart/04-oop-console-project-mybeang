@@ -33,16 +33,16 @@ public static class csvToData
         return map;
     }
 
-    public static List<int> GetEnermy(int stage)
+    public static List<int> GetEnemy(int stage)
     {
-        List<int> enermies = new();
-        string csvString = _OpenFile($"enermies.csv");
+        List<int> enemies = new();
+        string csvString = _OpenFile($"enemies.csv");
         string[] splitedString = csvString.Split('\n');
         foreach (var line in splitedString[stage - 1].Split(','))
         {
-            enermies.Add(int.Parse(line));
+            enemies.Add(int.Parse(line));
         }
-        return enermies;
+        return enemies;
     }
     
     public static int GetNumOfTreasuerBox(int stage)

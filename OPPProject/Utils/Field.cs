@@ -51,7 +51,7 @@
     
     public bool IsNotPlaceable(Vector2 pos)
         => (GetObject(pos.X, pos.Y) is Player ||
-            GetObject(pos.X, pos.Y) is Enermy ||
+            GetObject(pos.X, pos.Y) is Enemy ||
             GetObject(pos.X, pos.Y) is Stone ||
             GetObject(pos.X, pos.Y) is Tree ||
             GetObject(pos.X, pos.Y) is TreasureBox);

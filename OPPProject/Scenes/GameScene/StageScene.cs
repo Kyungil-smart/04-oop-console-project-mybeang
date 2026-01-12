@@ -6,15 +6,15 @@
     
     private Field _field;
     private Player _player;
-    private List<Enermy> _enermies;
+    private List<Enemy> _enemies;
     private List<TreasureBox> _treasureBoxs;
     private TopUI _topUI;
     private StageStatus _stageStatus;
     private int _totalNumOfTb;
     private int _timer;
-    private int _popUpEnermyIndex;
-    private int _curEnermiesOnMap;
-    private int _maxEnermiesOnMap;
+    private int _popUpEnemyIndex;
+    private int _curEnemiesOnMap;
+    private int _maxEnemiesOnMap;
     
     public StageScene(Player p) => Init(p);
     
@@ -26,7 +26,7 @@
         _field = new Field(Height, Width);
         _topUI = new TopUI(_renderWindow.Width);
         _player = p;
-        _enermies = new List<Enermy>();
+        _enemies = new List<Enemy>();
         _treasureBoxs = new List<TreasureBox>();
         _totalNumOfTb = csvToData.GetNumOfTreasuerBox(SceneManager.StageNumber);
     }
@@ -54,25 +54,25 @@
         _field.SetObject(_player);
         _player.Health.AddListener(_topUI.PlayerHpRender);
         
-        // Setting Enermy
-        List<int> enermyLevels = csvToData.GetEnermy(SceneManager.StageNumber);
-        _maxEnermiesOnMap = enermyLevels[0];
-        for (int i = 1; i < enermyLevels.Count - 1; i++)
+        // Setting Enemy
+        List<int> enemyLevels = csvToData.GetEnemy(SceneManager.StageNumber);
+        _maxEnemiesOnMap = enemyLevels[0];
+        for (int i = 1; i < enemyLevels.Count - 1; i++)
         {
-            Enermy e = new Enermy(_player, i);
-            e.SetLevel(enermyLevels[i]);
+            Enemy e = new Enemy(_player, i);
+            e.SetLevel(enemyLevels[i]);
             e.Map = _field;
-            e.IsAlive.AddListener(EnermyIsDead);
+            e.IsAlive.AddListener(EnemyIsDead);
             // e.Health.AddListener(_topUI.EnermyHpRender);
-            _enermies.Add(e);
+            _enemies.Add(e);
         }
-        _popUpEnermyIndex = 0;
+        _popUpEnemyIndex = 0;
     }
 
     public override void Update()
     {
         _player.Update();
-        foreach (Enermy e in _enermies)
+        foreach (Enemy e in _enemies)
             e.Update();
         
         if (_player.Health.Value.Current <= 0)
@@ -80,7 +80,7 @@
             SceneManager.Change(SceneName.GameOver);
         }
 
-        if (_enermies.Count <= 0 && _stageStatus == StageStatus.Activated)
+        if (_enemies.Count <= 0 && _stageStatus == StageStatus.Activated)
         {
             SceneManager.Change(SceneName.Victory);
             // if (SceneManager.StageNumber < 5)
@@ -95,11 +95,12 @@
             // }
         }
         
-        if (_timer % 10 == 9) // FIXME: keyabilable 추가시 적절히 변경해야함.
-        {
+        if (_timer % 10 == 9)
             PopUpTreasure();
-            PopUpEnermy();
-        }
+        
+        if (_timer % 20 == 0)
+            PopUpEnemy();
+        
         _timer++;
     }
 
@@ -124,27 +125,31 @@
         _player.Map = null;
         _player.Health.RemoveListener(_topUI.PlayerHpRender);
         _treasureBoxs.Clear();
-        _enermies.Clear();
-        _popUpEnermyIndex = 0;
-        _curEnermiesOnMap = 0;
-        _maxEnermiesOnMap = 0;
+        _enemies.Clear();
+        _popUpEnemyIndex = 0;
+        _curEnemiesOnMap = 0;
+        _maxEnemiesOnMap = 0;
         _stageStatus = StageStatus.Deactivated;
     }
 
-    private void PopUpEnermy()
+    private void GetAliveEnemyCount()
     {
-        int totalEnermies = _enermies.Count - 1;
-        if (_curEnermiesOnMap >= _maxEnermiesOnMap) return;
-        if (_popUpEnermyIndex >= totalEnermies) return;
-        _enermies[_popUpEnermyIndex++].PopUp();
-        _curEnermiesOnMap++;
+        
     }
 
-    public void EnermyIsDead(bool alive)
+    private void PopUpEnemy()
+    {
+        int totalEnemies = _enemies.Count - 1;
+        if (_curEnemiesOnMap >= _maxEnemiesOnMap) return;
+        if (_popUpEnemyIndex >= totalEnemies) return;
+        _enemies[_popUpEnemyIndex++].PopUp();
+        _curEnemiesOnMap++;
+    }
+
+    public void EnemyIsDead(bool alive)
     {
         if (!alive)
-            _curEnermiesOnMap--;
-        Logger.Debug($"Remain Enermy cnt {_curEnermiesOnMap}");
+            _curEnemiesOnMap--;
     }
 
     private void PopUpTreasure()

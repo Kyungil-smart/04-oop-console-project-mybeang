@@ -20,7 +20,7 @@
                 _emptyHpSymbol.Print(_playerColor);
         }
     }
-    public void EnermyHpRender(Hp health)
+    public void EnemyHpRender(Hp health)
     {
         // Enemy Side
         Console.SetCursorPosition(_rightAlignPos, 1);
