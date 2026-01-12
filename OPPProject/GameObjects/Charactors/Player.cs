@@ -2,7 +2,7 @@
 {
     private const int MaxHealth = 5;
     private const int MaxDamage = 3;
-    private const int MaxRange = 7;
+    private const int MaxRange = 10;
     private const int MaxMana = 5;
     
     private ObservableProperty<int> _manaPoint = new ObservableProperty<int>();
@@ -17,7 +17,7 @@
     {
         Health.Value = new Hp(1, 1);
         _damage = 1;
-        _range = 4;
+        _range = 6;
         _direction = Direction.Down;
         
         Symbol = '▼';
@@ -88,7 +88,6 @@
         }
         
         if (Map != null) Move(direction);
-        Logger.Debug($"Player:[{Position.X},{Position.Y}]");
     }
 
     private void ControlItemSelect()

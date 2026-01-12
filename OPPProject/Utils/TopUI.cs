@@ -22,7 +22,8 @@
     }
     public void RemainEnemy((int alive, int total) enemyCount)
     {
-        Console.SetCursorPosition(_rightAlignPos, 1);
-        
+        string stateString = $"{enemyCount.alive} / {enemyCount.total}"; 
+        Console.SetCursorPosition(_rightAlignPos - stateString.Length, 1);
+        stateString.Print(_enemyColor);
     }
 }

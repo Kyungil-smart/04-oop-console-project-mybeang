@@ -54,7 +54,8 @@
         _player.Health.AddListener(_topUI.PlayerHpRender);
         
         // Setting Enemy
-        _emanager.Setting(_player, _topUI);
+        _emanager.Setting(_player);
+        _emanager.EnemyState.AddListener(_topUI.RemainEnemy);
     }
 
     public override void Update()
@@ -95,6 +96,7 @@
         _field.RenderForPlayer(_player, _renderWindow);
         _player.Render();
         _topUI.PlayerHpRender(_player.Health.Value);
+        _topUI.RemainEnemy(_emanager.EnemyState.Value);
         if (_treasureBoxs.Count > 0)
         {
             foreach (TreasureBox treasureBox in _treasureBoxs)
@@ -110,6 +112,7 @@
         _field.SetObject(_player.Position, null);
         _player.Map = null;
         _player.Health.RemoveListener(_topUI.PlayerHpRender);
+        _emanager.EnemyState.RemoveListener(_topUI.RemainEnemy);
         _treasureBoxs.Clear();
         _emanager.Clear();
         _stageStatus = StageStatus.Deactivated;

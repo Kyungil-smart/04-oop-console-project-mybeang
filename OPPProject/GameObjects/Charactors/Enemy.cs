@@ -2,13 +2,11 @@
 {
     private int _level;
     private Player _player;
-    private int _id;
     private int _aliveTime;
     public ObservableProperty<bool> IsAlive = new();
     
-    public Enemy(Player player, int id)
+    public Enemy(Player player)
     {
-        _id = id;
         _player = player;
         IsAlive.Value = false;
         Init();
@@ -25,6 +23,7 @@
     {
         _level = level;  
         Health.Value = new Hp(2 * _level, 2 * _level);
+        Logger.Info($"{Health.Value.Total}/{_level}/");
     } 
     
     public void TakeDamage(int damage)
@@ -50,12 +49,12 @@
     public override void Update()
     {
         if (IsAlive.Value)
-            _autoMove();
+            AutoMove();
     }
     
     protected override void Move(Vector2 nxtPos)
     {
-        if (_aliveTime % 4 == 3)
+        if (_aliveTime % 5 == 4)
         {
             // 밖으로 나가지 말것
             if (Map.IsOutOfMap(nxtPos)) return;
@@ -89,10 +88,16 @@
     {
         IsAlive.Value = false;
         Map.UnsetObject(this);
-        _aliveTime = 0;
+        _aliveTime = int.MaxValue;
     }
     
-    private Vector2 _findNxtPos()
+    private void AutoMove()
+    {
+        Vector2 nxtPos = FindNxtPos();
+        Move(nxtPos);
+    }
+    
+    private Vector2 FindNxtPos()
     {
         if (!IsAlive.Value) return Position;
         Vector2 diffPos = _player.Position - Position;
@@ -186,10 +191,5 @@
             else nxtPos += Vector2.Up;
         }
         return nxtPos;
-    }
-    private void _autoMove()
-    {
-        Vector2 nxtPos = _findNxtPos();
-        Move(nxtPos);
     }
 }

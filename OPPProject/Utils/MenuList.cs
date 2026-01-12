@@ -96,7 +96,6 @@
     
     public void Render(int x, int y)
     {
-        Logger.Debug($"버프메뉴 좌표 [{x}, {y}]");
         _outline.X = x;
         _outline.Y = y;
         _outline.Draw();

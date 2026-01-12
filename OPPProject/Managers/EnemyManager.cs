@@ -8,14 +8,14 @@
     private int aliveCnt;
     public ObservableProperty<(int alive, int total)> EnemyState = new();
 
-    public void Setting(Player player, TopUI ui)
+    public void Setting(Player player)
     {
         Enemies = new List<Enemy>();
         List<int> enemyLevels = csvToData.GetEnemy(SceneManager.StageNumber);
         MaxEnemiesOnMap = enemyLevels[0];
-        for (int i = 1; i < enemyLevels.Count - 1; i++)
+        for (int i = 1; i < enemyLevels.Count; i++)
         {
-            Enemy e = new Enemy(player, i);
+            Enemy e = new Enemy(player);
             e.SetLevel(enemyLevels[i]);
             e.Map = player.Map;
             e.IsAlive.AddListener(EnemyIsDead);
@@ -26,13 +26,13 @@
         aliveCnt = 0;
         PopUpEnemyIndex = 0;
         EnemyState.Value = EnemyState.Value with { total = Enemies.Count };
-        EnemyState.AddListener(ui.RemainEnemy);
     }
 
     public void Update()
     {
         foreach (Enemy e in Enemies)
             e.Update();
+        EnemyState.Value = EnemyState.Value with { alive = aliveCnt };
     }
     
     public void EnemyIsDead(bool alive)

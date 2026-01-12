@@ -95,7 +95,6 @@
         // 플레이어를 중심으로 필요한 만큼만 Rendering
         (int Min, int Max) width = _calWinSize(player.Position.Y, rw.Width, Width);
         (int Min, int Max) height = _calWinSize(player.Position.X, rw.Height, Height);
-        Logger.Debug($"map render: w{width.Min}:{width.Max} x h{height.Min}:{height.Max}");   
         for (int i = height.Min; i < height.Max; i++)
         {
             for (int j = width.Min; j < width.Max; j++)
