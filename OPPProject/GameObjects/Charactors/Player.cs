@@ -9,7 +9,7 @@
     private int _range;
     private int _damage;
     public Player() => Init();
-    public TreasureBox InteractableTb;
+    public BuffBox BuffBx;
     private Direction _direction;
     private List<Bullet> _bullets;
 
@@ -93,13 +93,13 @@
     private void ControlItemSelect()
     {
         if (InputManager.GetKey(ConsoleKey.UpArrow))
-            InteractableTb.CursorUp();
+            BuffBx.CursorUp();
         
         if (InputManager.GetKey(ConsoleKey.DownArrow))
-            InteractableTb.CursorDown();
+            BuffBx.CursorDown();
         
         if (InputManager.GetKey(ConsoleKey.Enter))
-            InteractableTb.Select();
+            BuffBx.Select();
     }
     
     public override void Update()

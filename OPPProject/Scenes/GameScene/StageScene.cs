@@ -7,7 +7,7 @@
     private Field _field;
     private Player _player;
     private EnemyManager _emanager;
-    private List<TreasureBox> _treasureBoxs;
+    private List<BuffBox> _treasureBoxs;
     private TopUI _topUI;
     private StageStatus _stageStatus;
     private int _totalNumOfTb;
@@ -24,7 +24,7 @@
         _topUI = new TopUI(_renderWindow.Width);
         _player = p;
         _emanager = new();
-        _treasureBoxs = new List<TreasureBox>();
+        _treasureBoxs = new List<BuffBox>();
         _totalNumOfTb = csvToData.GetNumOfTreasuerBox(SceneManager.StageNumber);
     }
     
@@ -85,7 +85,7 @@
                 r.Draw();
                 Console.SetCursorPosition(3, 4);
                 nxText.Print(ConsoleColor.Magenta);
-                Thread.Sleep(5000); // 5sec
+                Thread.Sleep(3000); // wait 3 secs
                 GameManager.IsPaused = false;
                 SceneManager.StageNumber++;
                 SceneManager.Change(SceneName.Void);
@@ -106,7 +106,7 @@
         _topUI.RemainEnemy(_emanager.EnemyState.Value);
         if (_treasureBoxs.Count > 0)
         {
-            foreach (TreasureBox treasureBox in _treasureBoxs)
+            foreach (BuffBox treasureBox in _treasureBoxs)
             {
                 if (treasureBox.IsOpenedBox)
                     treasureBox.Render();
@@ -132,8 +132,8 @@
     {
         if (_treasureBoxs.Count < _totalNumOfTb)
         {
-            TreasureBox treasureBox = new TreasureBox(_field.GetRandomPosition(), _player);
-            _treasureBoxs.Add(treasureBox);    
+            BuffBox buffBox = new BuffBox(_field.GetRandomPosition(), _player);
+            _treasureBoxs.Add(buffBox);    
         }
     }
 }

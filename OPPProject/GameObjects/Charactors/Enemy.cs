@@ -182,7 +182,7 @@
             direction = Vector2.Down;
         }
         // 돌, 나무, 보물 상자 충돌시 회피해가기.
-        if (Map.IsObstacle(nxtPos) || Map.GetObject(nxtPos) is TreasureBox)
+        if (Map.IsObstacle(nxtPos) || Map.GetObject(nxtPos) is BuffBox)
         {
             nxtPos = Position;
             if (direction == Vector2.Up) nxtPos += Vector2.Right;

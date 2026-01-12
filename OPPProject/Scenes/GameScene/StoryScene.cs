@@ -18,6 +18,7 @@
         _howToPlayList.Add(("- 게임 아이콘", ConsoleColor.Gray));
         _howToPlayList.Add(("  > 플레이어: ▲",  ConsoleColor.Blue));
         _howToPlayList.Add(("  > 총알: * (플레이어의 삼각형 꼭지점 방향으로 총알이 나갑니다)", ConsoleColor.Yellow));
+        _howToPlayList.Add(("  > 버프: B", ConsoleColor.Cyan));
         _howToPlayList.Add(("  > 적: E", ConsoleColor.Red));
         _howToPlayList.Add(("  > 바위: S", ConsoleColor.Gray));
         _howToPlayList.Add(("  > 나무: T", ConsoleColor.DarkGreen));

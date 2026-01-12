@@ -54,7 +54,7 @@
             GetObject(pos.X, pos.Y) is Enemy ||
             GetObject(pos.X, pos.Y) is Stone ||
             GetObject(pos.X, pos.Y) is Tree ||
-            GetObject(pos.X, pos.Y) is TreasureBox);
+            GetObject(pos.X, pos.Y) is BuffBox);
 
     public Vector2 GetRandomPosition()
     {

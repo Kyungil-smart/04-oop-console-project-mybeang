@@ -1,4 +1,4 @@
-﻿public class TreasureBox : GameObject, IInteractable
+﻿public class BuffBox : GameObject, IInteractable
 {
     private Item[] _items = new Item[2];
     private Item _choicedItem;
@@ -6,7 +6,7 @@
     private Player _player;
     public bool IsOpenedBox;
 
-    public TreasureBox(Vector2 position, Player player)
+    public BuffBox(Vector2 position, Player player)
     {
         Position = position;
         _player = player;
@@ -49,7 +49,7 @@
     
     public void Render()
     {
-        _itemMenu.Render(_player.Position + Vector2.Right);
+        _itemMenu.Render(2, 3);
     }
 
     public void Select()
@@ -74,7 +74,7 @@
     {
         GameManager.IsPaused = true;
         IsOpenedBox = true;
-        player.InteractableTb = this;
+        player.BuffBx = this;
         Render();
     }
 }
