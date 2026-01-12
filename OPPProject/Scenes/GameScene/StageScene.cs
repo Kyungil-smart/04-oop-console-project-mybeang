@@ -13,6 +13,8 @@
     private int _totalNumOfTb;
     private int _timer;
     private int _popUpEnemyIndex;
+    private int _EnemyCount;
+    private int _deadEnemyCount;
     private int _curEnemiesOnMap;
     private int _maxEnemiesOnMap;
     
@@ -49,6 +51,8 @@
         }
         
         // Setting Player
+        if (SceneManager.StageNumber == 1)
+            _player.Health.Value = new Hp(1, 1);
         _player.Map = _field;
         _player.Position = new Vector2(Width / 2, Height / 2);
         _field.SetObject(_player);
@@ -63,7 +67,7 @@
             e.SetLevel(enemyLevels[i]);
             e.Map = _field;
             e.IsAlive.AddListener(EnemyIsDead);
-            // e.Health.AddListener(_topUI.EnermyHpRender);
+            
             _enemies.Add(e);
         }
         _popUpEnemyIndex = 0;
@@ -71,6 +75,12 @@
 
     public override void Update()
     {
+        if (_timer % 10 == 9)
+            PopUpTreasure();
+        
+        if (_timer % 20 == 0)
+            PopUpEnemy();
+        
         _player.Update();
         foreach (Enemy e in _enemies)
             e.Update();
@@ -80,7 +90,7 @@
             SceneManager.Change(SceneName.GameOver);
         }
 
-        if (_enemies.Count <= 0 && _stageStatus == StageStatus.Activated)
+        if (GetAliveEnemyCount() <= 0 && _stageStatus == StageStatus.Activated)
         {
             SceneManager.Change(SceneName.Victory);
             // if (SceneManager.StageNumber < 5)
@@ -94,13 +104,6 @@
             //     SceneManager.Change(SceneName.Victory);
             // }
         }
-        
-        if (_timer % 10 == 9)
-            PopUpTreasure();
-        
-        if (_timer % 20 == 0)
-            PopUpEnemy();
-        
         _timer++;
     }
 
@@ -132,9 +135,13 @@
         _stageStatus = StageStatus.Deactivated;
     }
 
-    private void GetAliveEnemyCount()
+    private int GetAliveEnemyCount()
     {
-        
+        int aliveEnemies = _enemies.Count;
+        foreach (Enemy e in _enemies) 
+            if (!e.IsAlive.Value) 
+                aliveEnemies--;
+        return aliveEnemies;
     }
 
     private void PopUpEnemy()

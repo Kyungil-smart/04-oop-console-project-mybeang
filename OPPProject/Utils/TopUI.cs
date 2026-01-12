@@ -20,16 +20,8 @@
                 _emptyHpSymbol.Print(_playerColor);
         }
     }
-    public void EnemyHpRender(Hp health)
+    public void RemainEnemy()
     {
-        // Enemy Side
-        Console.SetCursorPosition(_rightAlignPos, 1);
-        for (int i = _rightAlignPos; i > _rightAlignPos - health.Total; i--)
-        {
-            if (_rightAlignPos - health.Total <= health.Current)
-                _fillHpSymbol.Print(_enemyColor);    
-            else 
-                _emptyHpSymbol.Print(_enemyColor);
-        }
+        
     }
 }

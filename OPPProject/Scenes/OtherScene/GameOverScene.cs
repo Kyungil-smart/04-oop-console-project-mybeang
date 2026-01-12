@@ -6,6 +6,7 @@
 
     public override void Exit()
     {
+        SceneManager.StageNumber = 1;
     }
 
     public override void Update()
