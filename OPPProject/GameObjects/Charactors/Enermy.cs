@@ -3,6 +3,7 @@
     private int _level;
     private Player _player;
     private int _id;
+    private int _aliveTime;
     public ObservableProperty<bool> IsAlive = new();
     
     public Enermy(Player player, int id)
@@ -11,6 +12,7 @@
         _player = player;
         IsAlive.Value = false;
         Init();
+        _aliveTime = 0;
     }
 
     public void Init()
@@ -34,7 +36,7 @@
     
     public void Interact(Player player)
     {
-        // 플레이어가 데미지를 입는다.
+        // 플레이어가 적에게 돌진 했을 때 데미지를 입는다.
         player.TakeDamage();
     }
 
@@ -43,7 +45,6 @@
         // 몬스터가 데미지를 입는다.
         TakeDamage(bullet.Damage);
         bullet.Remove();
-        Logger.Info($"{_id}: curHp={Health.Value.Current}");
     }
 
     public override void Update()
@@ -54,12 +55,25 @@
     
     protected override void Move(Vector2 nxtPos)
     {
-        if (Map.IsOutOfMap(nxtPos)) return;
-        if (nxtPos == _player.Position) return;
-        if (GameManager.IsPaused) return;
-        Map.UnsetObject(this);
-        Map.SetObject(nxtPos, this);
-        Position = nxtPos;
+        if (_aliveTime % 4 == 3)
+        {
+            // 밖으로 나가지 말것
+            if (Map.IsOutOfMap(nxtPos)) return;
+            if (nxtPos == _player.Position)
+            {
+                // 플레이어에게 데미지를 준 후 위치 고수.
+                _player.TakeDamage();
+                return;
+            }
+            // 적끼리 뭉치지 말것
+            if (Map.GetObject(nxtPos) is Enermy) return;
+            // Pause 시 가만히 있기
+            if (GameManager.IsPaused) return;
+            Map.UnsetObject(this);
+            Map.SetObject(nxtPos, this);
+            Position = nxtPos;
+        }
+        _aliveTime++;
     }
 
     public void Render() {}
@@ -75,7 +89,7 @@
     {
         IsAlive.Value = false;
         Map.UnsetObject(this);
-        Logger.Info($"Enermy[{_id}] Dead.");
+        _aliveTime = 0;
     }
     
     private Vector2 _findNxtPos()
@@ -84,8 +98,6 @@
         Vector2 diffPos = _player.Position - Position;
         Vector2 nxtPos = Position;
         Vector2 direction;
-        Logger.Debug($"Enermy[{_id}]: [{Position.X},{Position.Y}]");
-        Logger.Debug($"diff: [{diffPos.X},{diffPos.Y}]");
         // FIXME: 아래 알고리즘을 좀 더 깔끔하게 할 방법 없을까?
         if (diffPos.X > 0 && diffPos.Y > 0)
         {
@@ -173,8 +185,6 @@
             else if (direction == Vector2.Down) nxtPos += Vector2.Left;
             else nxtPos += Vector2.Up;
         }
-        
-        Logger.Debug($"nx[{_id}]: [{nxtPos.X},{nxtPos.Y}]");
         return nxtPos;
     }
     private void _autoMove()

@@ -58,7 +58,7 @@
 
     public void GameStart()
     {
-        SceneManager.Change(SceneName.Stage);
+        SceneManager.Change(SceneName.Story);
     }
 
     public void ViewCredits()

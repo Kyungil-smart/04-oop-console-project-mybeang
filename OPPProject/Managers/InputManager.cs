@@ -27,10 +27,13 @@ public static class InputManager
     public static void GetUserInput()
     {
         _current = ConsoleKey.Clear;
-        ConsoleKey input = Console.ReadKey().Key;
-        if (_keys.Contains(input))
+        if (Console.KeyAvailable)
         {
-            _current = input;
+            ConsoleKey input = Console.ReadKey().Key;
+            if (_keys.Contains(input))
+            {
+                _current = input;
+            }    
         }
     }
 

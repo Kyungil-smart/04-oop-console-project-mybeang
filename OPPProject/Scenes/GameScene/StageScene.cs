@@ -21,8 +21,8 @@
     public void Init(Player p)
     {
         _stageStatus = StageStatus.None;
-        // _renderWindow = new RenderWindow(25, 15);
-        _renderWindow = new RenderWindow(40, 40);
+        _renderWindow = new RenderWindow(25, 15);
+        // _renderWindow = new RenderWindow(Width, Height); // 전체 맵 랜더링; 테스트용
         _field = new Field(Height, Width);
         _topUI = new TopUI(_renderWindow.Width);
         _player = p;
@@ -82,16 +82,17 @@
 
         if (_enermies.Count <= 0 && _stageStatus == StageStatus.Activated)
         {
-            if (SceneManager.StageNumber < 5)
-            {
-                // 다음 스테이지 간다는 문구 보이기 (ractangle 활용하기)
-                // Global Timer 생기면 일정 시간만 보이게....
-                SceneManager.StageNumber++;
-            }
-            else
-            {
-                SceneManager.Change(SceneName.Victory);
-            }
+            SceneManager.Change(SceneName.Victory);
+            // if (SceneManager.StageNumber < 5)
+            // {
+            //     // 다음 스테이지 간다는 문구 보이기 (ractangle 활용하기)
+            //     // Global Timer 생기면 일정 시간만 보이게....
+            //     SceneManager.StageNumber++;
+            // }
+            // else
+            // {
+            //     SceneManager.Change(SceneName.Victory);
+            // }
         }
         
         if (_timer % 10 == 9) // FIXME: keyabilable 추가시 적절히 변경해야함.

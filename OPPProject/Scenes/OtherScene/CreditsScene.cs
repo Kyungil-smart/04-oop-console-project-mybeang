@@ -3,11 +3,12 @@
     private List<(Vector2 pos, string text, ConsoleColor color)> _credits = new();
     private int _width = 25;
     private int _height = 25;
-    private int index = 0;
+    private int index;
     private Vector2 _topPos = new Vector2(3, 2); 
     
     public override void Enter()
     {
+        index = 0;
         AddCredit("<< 만든이 >>", ConsoleColor.Blue);
         AddCredit("====================", ConsoleColor.Blue);
         AddCredit("");
@@ -30,14 +31,18 @@
     
     public override void Exit()
     {
-        
+        _credits.Clear();   
     }
 
     public override void Update()
     {
-        if (InputManager.GetKey(ConsoleKey.Enter))
+        while (true)
         {
-            SceneManager.Change(SceneName.Title);
+            if (Console.ReadKey().Key == ConsoleKey.Enter)
+            {
+                SceneManager.Change(SceneName.Title);        
+                break;
+            }
         }
     }
 
@@ -54,7 +59,7 @@
             }
             Thread.Sleep(100);
         } 
-        Console.SetCursorPosition(2, _height);
+        Console.SetCursorPosition(2, _height - 1);
         "엔터 입력시 타이틀로 돌아갑니다.".Print();
     }
 }

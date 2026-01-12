@@ -1,6 +1,6 @@
 # OOP Project - OOP 기반 Console 게임 제작 프로젝트
 
-## (제목 미정)
+## 제목: Survive Console World
 
 ## 게임 내용
 
@@ -10,7 +10,5 @@
 > 아래 내용 추후 이미지로 제공 예정
 
 - 키보드 화살표 (↑, →, ←, ↓) 기반 플레이어 조작
-- 자동 Bullet 발사
-- 아이템 선택시 Enter 조작
-
-
+- 수동 Bullet 발사
+- 버프 선택시 Enter 조작

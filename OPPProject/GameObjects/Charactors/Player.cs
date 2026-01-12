@@ -20,7 +20,7 @@
         _range = 4;
         _direction = Direction.Down;
         
-        Symbol = 'P';
+        Symbol = '▼';
         Color = ConsoleColor.Blue;
         _bullets = new();
     }
@@ -53,24 +53,28 @@
         {
             direction = Vector2.Left;
             _direction = Direction.Left;
+            Symbol = '◀';
         }
 
         if (InputManager.GetKey(ConsoleKey.RightArrow))
         {
             direction = Vector2.Right;
             _direction = Direction.Right;
+            Symbol = '▶';
         }
 
         if (InputManager.GetKey(ConsoleKey.UpArrow))
         {
             direction = Vector2.Up;
             _direction = Direction.Up;
+            Symbol = '▲';
         }
 
         if (InputManager.GetKey(ConsoleKey.DownArrow))
         {
             direction = Vector2.Down;
             _direction = Direction.Down;
+            Symbol = '▼';
         }
 
         if (InputManager.GetKey(ConsoleKey.Z))

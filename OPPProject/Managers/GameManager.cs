@@ -1,7 +1,7 @@
 ﻿public class GameManager
 {
     public static bool IsGameOver { get; private set; }
-    public const string GameName = "Explore Console World";
+    public const string GameName = "Survive Console World";
     public static bool IsPaused { get; set; }
     
     private Player _player;
@@ -9,11 +9,8 @@
     public void Run()
     {
         Init();
-        Logger.Info("Game Started");
         while (!IsGameOver)
         {
-            if (IsPaused)
-                Logger.Debug("Paused");
             Console.Clear();
             SceneManager.Render();
             InputManager.GetUserInput();
@@ -23,6 +20,7 @@
                 SceneManager.Change(SceneName.Log);
             }
             SceneManager.Update();
+            Thread.Sleep(100);
         }
     }
 
