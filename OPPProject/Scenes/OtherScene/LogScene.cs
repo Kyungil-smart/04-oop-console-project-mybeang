@@ -15,7 +15,5 @@
         Logger.Render();
     }
 
-    public override void Exit()
-    {
-    }
+    public override void Exit() {}
 }

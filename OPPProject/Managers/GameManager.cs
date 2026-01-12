@@ -12,7 +12,8 @@
         Logger.Info("Game Started");
         while (!IsGameOver)
         {
-            Logger.Debug("Paused");
+            if (IsPaused)
+                Logger.Debug("Paused");
             Console.Clear();
             SceneManager.Render();
             InputManager.GetUserInput();

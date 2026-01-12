@@ -66,6 +66,6 @@ public class Bullet : GameObject
 
     public void Disappear()
     {
-        Map[Position.Y, Position.X].StepOff();
+        Map.UnsetObject(this);
     }
 }

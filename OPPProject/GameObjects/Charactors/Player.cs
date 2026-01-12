@@ -1,7 +1,7 @@
 ﻿public class Player : Charactor
 {
     private const int MaxHealth = 5;
-    private const int MaxDamage = 5;
+    private const int MaxDamage = 3;
     private const int MaxRange = 7;
     private const int MaxMana = 5;
     
@@ -29,6 +29,7 @@
     {
         Vector2 nextPos = Position + direction;
         if (Map.IsOutOfMap(nextPos)) return;
+        if (Map.IsObstacle(nextPos)) return;
 
         GameObject nextTileObject = Map.GetObject(nextPos);
         if (nextTileObject != null)
@@ -39,11 +40,7 @@
             }
         }
 
-        if (GameManager.IsPaused)
-        {
-            // Pause 상태인거 알람 띄워주기
-            return;
-        }
+        if (GameManager.IsPaused) return;
         Map.UnsetObject(this);
         Map.SetObject(nextPos, this);
         Position = nextPos;
@@ -123,10 +120,7 @@
         }
     }
 
-    public void Render()
-    {
-        
-    }
+    public void Render() {}
 
     public void Heal()
     {

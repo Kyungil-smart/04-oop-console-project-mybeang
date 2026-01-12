@@ -45,6 +45,10 @@
            nxtPos.X < 0 || 
            nxtPos.Y < 0;
 
+    public bool IsObstacle(Vector2 nxtPos)
+        => (GetObject(nxtPos) is Stone ||
+            GetObject(nxtPos) is Tree);
+    
     public bool IsNotPlaceable(Vector2 pos)
         => (GetObject(pos.X, pos.Y) is Player ||
             GetObject(pos.X, pos.Y) is Enermy ||
@@ -60,8 +64,8 @@
         
         while (true)
         {
-            x = rnd.Next(0, Height);
-            y = rnd.Next(0, Width);
+            x = rnd.Next(1, Height-1);
+            y = rnd.Next(1, Width-1);
             if (IsNotPlaceable(new Vector2(x, y))) 
                 continue;
             break;
@@ -100,13 +104,5 @@
             }
             Console.WriteLine();
         }
-    }
-    
-    
-    public Vector2 FindPath(Vector2 currentPos, Vector2 targetPos)
-    {
-        Vector2 nxtPos = currentPos;
-        
-        return nxtPos;
     }
 }

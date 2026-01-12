@@ -11,6 +11,9 @@
     private int _totalNumOfTb;
     private TopUI _topUI;
     private int _timer;
+    private int _popUpEnermyIndex;
+    private int _curEnermiesOnMap;
+    private int _maxEnermiesOnMap;
     
     public StageScene(Player p) => Init(p);
     
@@ -50,18 +53,26 @@
         
         // Setting Enermy
         List<int> enermyLevels = csvToData.GetEnermy(SceneManager.StageNumber);
-        foreach (int level in enermyLevels)
+        _maxEnermiesOnMap = 1;
+        // _maxEnermiesOnMap = enermyLevels[0];
+        for (int i = 1; i < enermyLevels.Count - 1; i++)
         {
-            Enermy e = new Enermy();
-            e.SetLevel(level);
-            e.Health.AddListener(_topUI.EnermyHpRender);
+            Enermy e = new Enermy(_player);
+            e.SetLevel(enermyLevels[i]);
+            e.Map = _field;
+            e.IsAlive.AddListener(EnermyIsDead);
+            // e.Health.AddListener(_topUI.EnermyHpRender);
             _enermies.Add(e);
         }
+        _popUpEnermyIndex = 0;
     }
 
     public override void Update()
     {
         _player.Update();
+        foreach (Enermy e in _enermies)
+            e.Update();
+        
         if (_player.Health.Value.Current <= 0)
         {
             SceneManager.Change(SceneName.GameOver);
@@ -80,10 +91,11 @@
                 SceneManager.Change(SceneName.Victory);
             }
         }
-
+        
         if (_timer % 10 == 0) // FIXME: keyabilable 추가시 적절히 변경해야함.
         {
             PopUpTreasure();
+            PopUpEnermy();
         }
         _timer++;
     }
@@ -112,7 +124,17 @@
 
     private void PopUpEnermy()
     {
-        // 데이터에 맞춰서 진행.
+        int totalEnermies = _enermies.Count - 1;
+        if (_curEnermiesOnMap >= _maxEnermiesOnMap) return;
+        if (_popUpEnermyIndex >= totalEnermies) return;
+        _enermies[_popUpEnermyIndex++].PopUp();
+        _curEnermiesOnMap++;
+    }
+
+    public void EnermyIsDead(bool alive)
+    {
+        if (!alive)
+            _curEnermiesOnMap--;
     }
 
     private void PopUpTreasure()

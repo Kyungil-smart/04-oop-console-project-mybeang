@@ -20,8 +20,11 @@
     private static void _change(Scene next)
     {
         if (next == Current) return;
-        Current?.Exit();
-        next.Enter();
+        if (!(next is LogScene))
+            Current?.Exit();    
+        
+        if (!(Current is LogScene)) 
+            next.Enter();
         
         _prev = Current;
         Current = next;
