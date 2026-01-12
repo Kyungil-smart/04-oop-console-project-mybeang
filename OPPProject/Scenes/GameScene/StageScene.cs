@@ -9,6 +9,7 @@
     private List<Enermy> _enermies;
     private List<TreasureBox> _treasureBoxs;
     private TopUI _topUI;
+    private StageStatus _stageStatus;
     private int _totalNumOfTb;
     private int _timer;
     private int _popUpEnermyIndex;
@@ -19,6 +20,7 @@
     
     public void Init(Player p)
     {
+        _stageStatus = StageStatus.None;
         // _renderWindow = new RenderWindow(25, 15);
         _renderWindow = new RenderWindow(40, 40);
         _field = new Field(Height, Width);
@@ -32,6 +34,7 @@
     public override void Enter()
     {
         _timer = 0;
+        _stageStatus = StageStatus.Activated;
         // Setting Map
         string[,] mapData = csvToData.GetMap(SceneManager.StageNumber);
         for (int i = 0; i < Height; i++)
@@ -77,7 +80,7 @@
             SceneManager.Change(SceneName.GameOver);
         }
 
-        if (_enermies.Count <= 0)
+        if (_enermies.Count <= 0 && _stageStatus == StageStatus.Activated)
         {
             if (SceneManager.StageNumber < 5)
             {
@@ -91,7 +94,7 @@
             }
         }
         
-        if (_timer % 10 == 0) // FIXME: keyabilable 추가시 적절히 변경해야함.
+        if (_timer % 10 == 9) // FIXME: keyabilable 추가시 적절히 변경해야함.
         {
             PopUpTreasure();
             PopUpEnermy();
@@ -124,6 +127,7 @@
         _popUpEnermyIndex = 0;
         _curEnermiesOnMap = 0;
         _maxEnermiesOnMap = 0;
+        _stageStatus = StageStatus.Deactivated;
     }
 
     private void PopUpEnermy()

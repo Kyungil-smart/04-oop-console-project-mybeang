@@ -12,8 +12,10 @@ public static class InputManager
         ConsoleKey.RightArrow,
         ConsoleKey.Enter,
         ConsoleKey.Z,
-        ConsoleKey.L,
-        ConsoleKey.I,
+        
+        // 개발 관련 키들
+        ConsoleKey.L, // 로그보기
+        ConsoleKey.Q, // 타이틀로 나가기
     };
 
     public static bool GetKey(ConsoleKey input)

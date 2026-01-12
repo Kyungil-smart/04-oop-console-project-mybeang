@@ -18,3 +18,10 @@ public enum SceneName
     Log,
     Victory,
 }
+
+public enum StageStatus
+{
+    None,
+    Activated,
+    Deactivated,
+}

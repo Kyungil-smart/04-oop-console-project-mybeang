@@ -78,6 +78,11 @@
             ShootBullet();
         }
         
+        if (InputManager.GetKey(ConsoleKey.Q)) // 테스트용
+        {
+            SceneManager.Change(SceneName.GameOver);
+        }
+        
         if (Map != null) Move(direction);
         Logger.Debug($"Player:[{Position.X},{Position.Y}]");
     }
