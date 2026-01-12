@@ -6,17 +6,12 @@
     
     private Field _field;
     private Player _player;
-    private List<Enemy> _enemies;
+    private EnemyManager _emanager;
     private List<TreasureBox> _treasureBoxs;
     private TopUI _topUI;
     private StageStatus _stageStatus;
     private int _totalNumOfTb;
     private int _timer;
-    private int _popUpEnemyIndex;
-    private int _EnemyCount;
-    private int _deadEnemyCount;
-    private int _curEnemiesOnMap;
-    private int _maxEnemiesOnMap;
     
     public StageScene(Player p) => Init(p);
     
@@ -28,7 +23,7 @@
         _field = new Field(Height, Width);
         _topUI = new TopUI(_renderWindow.Width);
         _player = p;
-        _enemies = new List<Enemy>();
+        _emanager = new();
         _treasureBoxs = new List<TreasureBox>();
         _totalNumOfTb = csvToData.GetNumOfTreasuerBox(SceneManager.StageNumber);
     }
@@ -59,18 +54,7 @@
         _player.Health.AddListener(_topUI.PlayerHpRender);
         
         // Setting Enemy
-        List<int> enemyLevels = csvToData.GetEnemy(SceneManager.StageNumber);
-        _maxEnemiesOnMap = enemyLevels[0];
-        for (int i = 1; i < enemyLevels.Count - 1; i++)
-        {
-            Enemy e = new Enemy(_player, i);
-            e.SetLevel(enemyLevels[i]);
-            e.Map = _field;
-            e.IsAlive.AddListener(EnemyIsDead);
-            
-            _enemies.Add(e);
-        }
-        _popUpEnemyIndex = 0;
+        _emanager.Setting(_player, _topUI);
     }
 
     public override void Update()
@@ -79,18 +63,17 @@
             PopUpTreasure();
         
         if (_timer % 20 == 0)
-            PopUpEnemy();
+            _emanager.PopUpEnemy();
         
         _player.Update();
-        foreach (Enemy e in _enemies)
-            e.Update();
+        _emanager.Update();
         
         if (_player.Health.Value.Current <= 0)
         {
             SceneManager.Change(SceneName.GameOver);
         }
 
-        if (GetAliveEnemyCount() <= 0 && _stageStatus == StageStatus.Activated)
+        if (_emanager.IsAllKilled() && _stageStatus == StageStatus.Activated)
         {
             SceneManager.Change(SceneName.Victory);
             // if (SceneManager.StageNumber < 5)
@@ -128,35 +111,8 @@
         _player.Map = null;
         _player.Health.RemoveListener(_topUI.PlayerHpRender);
         _treasureBoxs.Clear();
-        _enemies.Clear();
-        _popUpEnemyIndex = 0;
-        _curEnemiesOnMap = 0;
-        _maxEnemiesOnMap = 0;
+        _emanager.Clear();
         _stageStatus = StageStatus.Deactivated;
-    }
-
-    private int GetAliveEnemyCount()
-    {
-        int aliveEnemies = _enemies.Count;
-        foreach (Enemy e in _enemies) 
-            if (!e.IsAlive.Value) 
-                aliveEnemies--;
-        return aliveEnemies;
-    }
-
-    private void PopUpEnemy()
-    {
-        int totalEnemies = _enemies.Count - 1;
-        if (_curEnemiesOnMap >= _maxEnemiesOnMap) return;
-        if (_popUpEnemyIndex >= totalEnemies) return;
-        _enemies[_popUpEnemyIndex++].PopUp();
-        _curEnemiesOnMap++;
-    }
-
-    public void EnemyIsDead(bool alive)
-    {
-        if (!alive)
-            _curEnemiesOnMap--;
     }
 
     private void PopUpTreasure()

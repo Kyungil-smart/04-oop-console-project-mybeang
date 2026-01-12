@@ -20,8 +20,9 @@
                 _emptyHpSymbol.Print(_playerColor);
         }
     }
-    public void RemainEnemy()
+    public void RemainEnemy((int alive, int total) enemyCount)
     {
+        Console.SetCursorPosition(_rightAlignPos, 1);
         
     }
 }
