@@ -1,9 +1,6 @@
 ﻿public class VictoryScene : Scene
 {
-    public override void Enter()
-    {
-        
-    }
+    public override void Enter() { }
 
     public override void Update()
     {
@@ -16,13 +13,12 @@
     public override void Render()
     {
         Console.SetCursorPosition(5, 5);
-        "Victory".Print(ConsoleColor.Green);
-        Console.SetCursorPosition(5, 7);
-        "Please Pres Enter key to continue..".Print(ConsoleColor.Gray);
+        "!!    축하 드립니다     !!".Print(ConsoleColor.Green);
+        Console.SetCursorPosition(5, 6);
+        "!! 탈출에 성공했습니다 ~ !!".Print(ConsoleColor.Green);
+        Console.SetCursorPosition(5, 10);
+        "타이틀로 돌아가려면 'Enter Key'를 눌러주세요.".Print();
     }
 
-    public override void Exit()
-    {
-        
-    }
+    public override void Exit() { }
 }

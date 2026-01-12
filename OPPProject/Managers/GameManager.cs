@@ -1,7 +1,7 @@
 ﻿public class GameManager
 {
     public static bool IsGameOver { get; private set; }
-    public const string GameName = "Survive Console World";
+    public const string GameName = "<< Survive Console World >>";
     public static bool IsPaused { get; set; }
     
     private Player _player;
@@ -30,7 +30,7 @@
         IsGameOver = false;
         _player = new Player();
         
-        SceneManager.StageNumber = 1;
+        SceneManager.StageNumber = 2;
         SceneManager.Add(SceneName.Title, new TitleScene());
         SceneManager.Add(SceneName.Story, new StoryScene());
         SceneManager.Add(SceneName.Stage, new StageScene(_player));

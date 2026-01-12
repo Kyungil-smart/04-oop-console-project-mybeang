@@ -1,4 +1,4 @@
-﻿public class IncDamage : Item
+﻿public class IncDamage : Buff
 {
     public IncDamage() => Init();
     

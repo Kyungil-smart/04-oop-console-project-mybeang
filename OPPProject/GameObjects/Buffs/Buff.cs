@@ -1,4 +1,4 @@
-﻿public abstract class Item : GameObject
+﻿public abstract class Buff : GameObject
 {
     public int Id  { get; set; }
     public string Name { get; set; }

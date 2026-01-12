@@ -1,7 +1,7 @@
 ﻿public class BuffBox : GameObject, IInteractable
 {
-    private Item[] _items = new Item[2];
-    private Item _choicedItem;
+    private Buff[] _items = new Buff[2];
+    private Buff _choicedBuff;
     public MenuList _itemMenu;
     private Player _player;
     public bool IsOpenedBox;
@@ -29,10 +29,10 @@
         IsOpenedBox = false;
     }
     
-    private Item ChoiceItem()
+    private Buff ChoiceItem()
     {
         Random rnd = new Random();
-        Item[] GivenItems = new Item[]
+        Buff[] GivenItems = new Buff[]
         {
             new Potion(), new IncHp(), new IncRange(), new IncDamage()
         };

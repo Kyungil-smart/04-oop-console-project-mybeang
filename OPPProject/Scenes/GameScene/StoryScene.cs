@@ -23,7 +23,7 @@
         _howToPlayList.Add(("  > 바위: S", ConsoleColor.Gray));
         _howToPlayList.Add(("  > 나무: T", ConsoleColor.DarkGreen));
         
-        _tailList.Add("엔터키 입력 시 게임이 시작됩니다!");
+        _tailList.Add("'Enter Key' 입력 시 게임이 시작됩니다!");
         _tailList.Add("즐거운 게임 되세요~!");
     }
 

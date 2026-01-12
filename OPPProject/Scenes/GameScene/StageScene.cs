@@ -39,9 +39,13 @@
             for (int j = 0; j < Width; j++)
             {
                 if (mapData[i, j] == "G")
-                    _field[j, i] = new Tile(new Grass(), new Vector2(j, i));
+                    _field[i, j] = new Tile(new Grass(), new Vector2(i, j));
+                else if (mapData[i, j] == "T")
+                    _field[i, j] = new Tile(new Tree(), new Vector2(i, j));
+                else if (mapData[i, j] == "S")
+                    _field[i, j] = new Tile(new Stone(), new Vector2(i, j));
                 else
-                    _field[j, i] = new Tile(null, new Vector2(j, i));
+                    _field[i, j] = new Tile(null, new Vector2(i, j));
             }
         }
         

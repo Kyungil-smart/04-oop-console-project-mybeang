@@ -1,18 +1,18 @@
-﻿public class Potion : Item
+﻿public class IncRange : Buff
 {
-    public Potion() => Init();
+    public IncRange() => Init();
     
     public override void Init()
     {
         Id = 0;
-        Name = "잃어버린 HP 1 증가";
-        Description = "Heal 1 Health Point";
+        Name = "사정거리를 1 증가";
+        Description = "Increase Shoot Range";
     }
 
     public override void Use()
     {
         Logger.Debug($"[ITEM] {Name}: {Description}");
-        _player.Heal();
+        _player.PlusMaxRange();
         _player = null;
     }
 }
