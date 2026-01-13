@@ -1,4 +1,5 @@
-﻿public class GameOverScene : Scene
+﻿// 게임 오버 씬
+public class GameOverScene : Scene
 {
     public override void Enter()
     {

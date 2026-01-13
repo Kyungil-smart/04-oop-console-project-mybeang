@@ -1,7 +1,7 @@
 ﻿public class GameManager
 {
     public static bool IsGameOver { get; private set; }
-    public const string GameName = "<< Survive Console World >>";
+    public const string GameName = "<< Survive Console World >>";  // 나름 심사숙고해서 결정한 게임 이름 입니다?
     public static bool IsPaused { get; set; }
     
     private Player _player;
@@ -9,21 +9,25 @@
     public void Run()
     {
         Init();
+        // 메인 루프
         while (!IsGameOver)
         {
             Console.Clear();
             SceneManager.Render();
             InputManager.GetUserInput();
-
+            
+            // 개발용 Logic. 데이터 확인을 위한 로그를 찍고 확인을 위함.
             if (InputManager.GetKey(ConsoleKey.L))
             {
                 SceneManager.Change(SceneName.Log);
             }
+            
             SceneManager.Update();
-            Thread.Sleep(100);
+            Thread.Sleep(100);  // 10 FPS
         }
     }
 
+    // 게임 시작시 필요 내용 정리.
     private void Init()
     {
         IsPaused = false;

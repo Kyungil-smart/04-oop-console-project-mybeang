@@ -1,4 +1,4 @@
-﻿
+﻿// 기본 씬 추상 클래스
 public abstract class Scene
 {
     public abstract void Enter();

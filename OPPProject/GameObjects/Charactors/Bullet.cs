@@ -4,18 +4,15 @@
 */ 
 public class Bullet : GameObject
 {
-    private Player _player;
     public int Damage;
     public int Range;
     private Direction _direction;
 
-    public Bullet(Player player, Vector2 position, int damage, int range, Direction direction)
+    public Bullet(Player player, Vector2 position)
     {
-        _player = player;
-        _direction = direction;
-        
-        Damage = damage;
-        Range = range;
+        _direction = player.Direction;
+        Damage = player.Damage;
+        Range = player.Range;
         Position = position;
         Map = player.Map;
         Init();
@@ -25,12 +22,13 @@ public class Bullet : GameObject
     {
         Symbol = '*';
         Color = ConsoleColor.Yellow;
-        Map[Position.Y, Position.X].StepOn(this);
+        Map.SetObject(this);
     }
     
     public void Move()
     {
         Vector2 nxtPos = Position; 
+        // Player 의 현 이동 방향을 이용하여 진행.
         switch (_direction)
         {
             case Direction.Up:
@@ -46,17 +44,16 @@ public class Bullet : GameObject
                 nxtPos += Vector2.Right;
                 break;
         }
+        // 총알이 바깥에 나가지 않게
         if (Map.IsOutOfMap(nxtPos))
+        {
+            Range = 0;
             return;
+        }
         
         GameObject nextTileObject = Map.GetObject(nxtPos);
-        if (nextTileObject != null)
-        {
-            if (nextTileObject is ICrashBullet)
-            {
-                (nextTileObject as ICrashBullet).CrashBullet(this);
-            }
-        }
+        if (nextTileObject != null && nextTileObject is ICrashBullet)
+            (nextTileObject as ICrashBullet).CrashBullet(this);
         
         Map.UnsetObject(this);
         Map.SetObject(nxtPos, this);
@@ -66,6 +63,7 @@ public class Bullet : GameObject
 
     public void Remove()
     {
+        Range = 0;
         Map.UnsetObject(this);
     }
 }

@@ -1,6 +1,6 @@
-﻿public class Potion : Buff
+﻿public class Heal : Buffs
 {
-    public Potion() => Init();
+    public Heal() => Init();
     
     public override void Init()
     {

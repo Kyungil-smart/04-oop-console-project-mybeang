@@ -1,6 +1,6 @@
-﻿public class VoidScene : Scene
+﻿// Stage 넘김을 위해 중간에 지나가는 아무것도 없는 씬.
+public class VoidScene : Scene
 {
-    // Stage 중간 넘김을 위한 아무것도 없는 씬.
     public override void Enter() {}
 
     public override void Update()

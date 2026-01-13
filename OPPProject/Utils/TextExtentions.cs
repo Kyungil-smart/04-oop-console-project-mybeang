@@ -1,4 +1,5 @@
-﻿public static class TextExtentions
+﻿// text print, 한글을 위한 text length 계산 등 by 김재성 강사님
+public static class TextExtentions
 {
     public static void Print(this string text, ConsoleColor color = ConsoleColor.Gray)
     {

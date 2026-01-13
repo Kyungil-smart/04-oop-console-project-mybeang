@@ -1,4 +1,5 @@
-﻿public class ObservableProperty<T> where T : struct
+﻿// 옵저버패턴을 위한 클래스 정의 by 김재성 강사님
+public class ObservableProperty<T> where T : struct
 {
     private T _value;
     public T Value

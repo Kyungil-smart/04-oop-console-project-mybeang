@@ -1,4 +1,5 @@
-﻿public class Enemy : Charactor, IInteractable, ICrashBullet
+﻿// 적 
+public class Enemy : Charactor, IInteractable, ICrashBullet
 {
     private int _level;
     private Player _player;
@@ -19,6 +20,7 @@
         Color = ConsoleColor.Red;
     }
 
+    // 레벨에 따른 체력 초기화.
     public void SetLevel(int level)
     {
         _level = level;  
@@ -26,6 +28,7 @@
         Logger.Info($"{Health.Value.Total}/{_level}/");
     } 
     
+    // 데미지 입힘.
     public void TakeDamage(int damage)
     {
         Health.Value = Health.Value with { Current = Health.Value.Current - damage };
@@ -33,15 +36,15 @@
             Dead();
     }
     
+    // 플레이어->적 일때, 플레이어가 데미지를 입는다.
     public void Interact(Player player)
     {
-        // 플레이어가 적에게 돌진 했을 때 데미지를 입는다.
         player.TakeDamage();
     }
 
+    // 총알에 맞으면 적은 데미지를 입는다.
     public void CrashBullet(Bullet bullet)
     {
-        // 몬스터가 데미지를 입는다.
         TakeDamage(bullet.Damage);
         bullet.Remove();
     }
@@ -54,13 +57,14 @@
     
     protected override void Move(Vector2 nxtPos)
     {
+        // 0.5초마다 1보. 
         if (_aliveTime % 5 == 4)
         {
             // 밖으로 나가지 말것
             if (Map.IsOutOfMap(nxtPos)) return;
+            // 플레이어에게 데미지를 준 후 위치 고수.
             if (nxtPos == _player.Position)
             {
-                // 플레이어에게 데미지를 준 후 위치 고수.
                 _player.TakeDamage();
                 return;
             }
@@ -75,7 +79,8 @@
         _aliveTime++;
     }
 
-    public void Render() {}
+    // 적 관리 객체에서 일괄적으로 랜더링.
+    public void Render() {} 
 
     public void PopUp()
     {
@@ -88,15 +93,17 @@
     {
         IsAlive.Value = false;
         Map.UnsetObject(this);
-        _aliveTime = int.MaxValue;
+        _aliveTime = -1;
     }
     
+    // 플레이어를 향해 자동 이동
     private void AutoMove()
     {
         Vector2 nxtPos = FindNxtPos();
         Move(nxtPos);
     }
     
+    // 플레이어 위치를 통한 다음 위치 정보 계산
     private Vector2 FindNxtPos()
     {
         if (!IsAlive.Value) return Position;

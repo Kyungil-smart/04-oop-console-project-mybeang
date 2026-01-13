@@ -1,4 +1,5 @@
-﻿public class CreditsScene : Scene
+﻿// Credit 씬
+public class CreditsScene : Scene
 {
     private List<(Vector2 pos, string text, ConsoleColor color)> _credits = new();
     private int _width = 25;

@@ -1,18 +1,18 @@
-﻿public class IncRange : Buff
+﻿public class IncHp : Buffs
 {
-    public IncRange() => Init();
+    public IncHp() => Init();
     
     public override void Init()
     {
         Id = 0;
-        Name = "사정거리를 1 증가";
-        Description = "Increase Shoot Range";
+        Name = "HP를 1 증가";
+        Description = "Increase Max Health Point";
     }
 
     public override void Use()
     {
         Logger.Debug($"[ITEM] {Name}: {Description}");
-        _player.PlusMaxRange();
+        _player.PlusMaxHp();
         _player = null;
     }
 }

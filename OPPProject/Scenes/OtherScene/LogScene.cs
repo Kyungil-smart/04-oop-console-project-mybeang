@@ -1,4 +1,5 @@
-﻿public class LogScene : Scene
+﻿// 로그 확인씬. 개발 전용
+public class LogScene : Scene
 {
     public override void Enter(){}
     public override void Update()

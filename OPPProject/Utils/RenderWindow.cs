@@ -1,4 +1,5 @@
-﻿public struct RenderWindow
+﻿// 게임 화면 Rendering 을 위한 Window 구조체
+public struct RenderWindow
 {
     public int Width;
     public int Height;

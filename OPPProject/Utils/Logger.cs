@@ -5,6 +5,7 @@
     Debug
 }
 
+// Log 찍기위한 클래스
 public static class Logger
 {
     private static List<(LogType type, string text)> _logList = new();

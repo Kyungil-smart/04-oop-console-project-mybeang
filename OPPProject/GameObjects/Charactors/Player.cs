@@ -1,4 +1,5 @@
-﻿public class Player : Charactor
+﻿// 플레이어 케릭터
+public class Player : Charactor
 {
     private const int MaxHealth = 5;
     private const int MaxDamage = 3;
@@ -6,41 +7,38 @@
     private const int MaxMana = 5;
     
     private ObservableProperty<int> _manaPoint = new ObservableProperty<int>();
-    private int _range;
-    private int _damage;
+    public int Range;
+    public int Damage;
     public Player() => Init();
     public BuffBox BuffBx;
-    private Direction _direction;
+    public Direction Direction;
     private List<Bullet> _bullets;
 
+    // 플레이어 준비
     public override void Init()
     {
         Health.Value = new Hp(1, 1);
-        _damage = 1;
-        _range = 6;
-        _direction = Direction.Down;
-        
+        Damage = 1;
+        Range = 6;
+        Direction = Direction.Down;
         Symbol = '▼';
         Color = ConsoleColor.Blue;
         _bullets = new();
     }
 
+    // 플레이어 실제 움직임
     protected override void Move(Vector2 direction)
     {
         Vector2 nextPos = Position + direction;
         if (Map.IsOutOfMap(nextPos)) return;
         if (Map.IsObstacle(nextPos)) return;
+        // Pause 상태에서 혹시 모를 플레이어 움직임을 위한 방어로직.
+        if (GameManager.IsPaused) return;
 
         GameObject nextTileObject = Map.GetObject(nextPos);
-        if (nextTileObject != null)
-        {
-            if (nextTileObject is IInteractable)
-            {
-                (nextTileObject as IInteractable).Interact(this);
-            }
-        }
-
-        if (GameManager.IsPaused) return;
+        if (nextTileObject != null && nextTileObject is IInteractable)
+            (nextTileObject as IInteractable).Interact(this);
+        
         Map.UnsetObject(this);
         Map.SetObject(nextPos, this);
         Position = nextPos;
@@ -52,40 +50,36 @@
         if (InputManager.GetKey(ConsoleKey.LeftArrow))
         {
             direction = Vector2.Left;
-            _direction = Direction.Left;
+            Direction = Direction.Left;
             Symbol = '◀';
         }
 
         if (InputManager.GetKey(ConsoleKey.RightArrow))
         {
             direction = Vector2.Right;
-            _direction = Direction.Right;
+            Direction = Direction.Right;
             Symbol = '▶';
         }
 
         if (InputManager.GetKey(ConsoleKey.UpArrow))
         {
             direction = Vector2.Up;
-            _direction = Direction.Up;
+            Direction = Direction.Up;
             Symbol = '▲';
         }
 
         if (InputManager.GetKey(ConsoleKey.DownArrow))
         {
             direction = Vector2.Down;
-            _direction = Direction.Down;
+            Direction = Direction.Down;
             Symbol = '▼';
         }
 
         if (InputManager.GetKey(ConsoleKey.Z))
-        {
             ShootBullet();
-        }
         
         if (InputManager.GetKey(ConsoleKey.Q)) // 테스트용
-        {
             SceneManager.Change(SceneName.GameOver);
-        }
         
         if (Map != null) Move(direction);
     }
@@ -115,10 +109,8 @@
                     continue;
                 }
                 _bullets[i].Move();
-                Thread.Sleep(100);
             }
             ControlPlayer();
-             
         }
         
         // 보물함 내 제어시 플레이어와 적은 paused 상태.
@@ -135,24 +127,28 @@
         if (Health.Value.Current == Health.Value.Total) return;
         Health.Value = Health.Value with { Current = Health.Value.Current + 1 };
     }
+    
     public void PlusDamage()
     {
-        if (_damage >= MaxDamage) return;
-        _damage++;
+        if (Damage >= MaxDamage) return;
+        Damage++;
     }
+    
     public void PlusMaxRange()
     {
-        if (_range >= MaxRange) return;
-        _range++;
+        if (Range >= MaxRange) return;
+        Range++;
     }
+    
     public void PlusMaxHp()
     {
         if (Health.Value.Total >= MaxHealth) return;
         Health.Value = Health.Value with { Total = Health.Value.Total + 1 };
     }
+    
+    // FIXME: 나중 구현
     public void HealMana(int point)
     {
-        // FIXME: 나중 구현
         _manaPoint.Value += point;
     }
 
@@ -160,16 +156,16 @@
     {
         Vector2 bulletPos = new Vector2(Position.X, Position.Y);
         
-        if (_direction == Direction.Up) 
+        if (Direction == Direction.Up) 
             bulletPos += Vector2.Up;
-        else if (_direction == Direction.Down) 
+        else if (Direction == Direction.Down) 
             bulletPos += Vector2.Down;
-        else if (_direction == Direction.Left) 
+        else if (Direction == Direction.Left) 
             bulletPos += Vector2.Left;
         else 
             bulletPos += Vector2.Right;
         
-        _bullets.Add(new Bullet(this, bulletPos, _damage, _range, _direction));
+        _bullets.Add(new Bullet(this, bulletPos));
     }
     
     public void TakeDamage()

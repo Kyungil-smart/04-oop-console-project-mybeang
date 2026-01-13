@@ -1,4 +1,5 @@
-﻿public class Field
+﻿// 맵 관리용 클래스
+public class Field
 {
     public Tile[,] _map;   // Hight,Width
     public int Width;
@@ -39,23 +40,20 @@
         _map[pos.X, pos.Y].StepOff();
     }
 
+    // 맵 바깥으로 나가는지 확인
     public bool IsOutOfMap(Vector2 nxtPos)
         => nxtPos.X >= _map.GetLength(0) || 
            nxtPos.Y >= _map.GetLength(1) || 
            nxtPos.X < 0 || 
            nxtPos.Y < 0;
 
-    public bool IsObstacle(Vector2 nxtPos)
-        => (GetObject(nxtPos) is Stone ||
-            GetObject(nxtPos) is Tree);
+    // 충돌물 감지
+    public bool IsObstacle(Vector2 nxtPos) => GetObject(nxtPos) is IObstacle;
     
-    public bool IsNotPlaceable(Vector2 pos)
-        => (GetObject(pos.X, pos.Y) is Player ||
-            GetObject(pos.X, pos.Y) is Enemy ||
-            GetObject(pos.X, pos.Y) is Stone ||
-            GetObject(pos.X, pos.Y) is Tree ||
-            GetObject(pos.X, pos.Y) is BuffBox);
+    // GameObject가 겹치지 않도록 감지
+    public bool IsNotPlaceable(Vector2 pos) => GetObject(pos) is INotPlaceable;
 
+    // 랜덤 좌표 획득
     public Vector2 GetRandomPosition()
     {
         int x;
@@ -90,9 +88,9 @@
         return (minSize, maxSize);
     }
     
+    // 맵에서 플레이어를 중심으로 필요 만큼만 Rendering
     public void RenderForPlayer(Player player, RenderWindow rw)
     {
-        // 플레이어를 중심으로 필요한 만큼만 Rendering
         (int Min, int Max) width = _calWinSize(player.Position.Y, rw.Width, Width);
         (int Min, int Max) height = _calWinSize(player.Position.X, rw.Height, Height);
         for (int i = height.Min; i < height.Max; i++)

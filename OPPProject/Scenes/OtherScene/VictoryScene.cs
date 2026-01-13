@@ -1,4 +1,5 @@
-﻿public class VictoryScene : Scene
+﻿// 승리 씬
+public class VictoryScene : Scene
 {
     public override void Enter() { }
 

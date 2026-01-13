@@ -1,4 +1,9 @@
-﻿public class TopUI
+﻿public enum TopUiAlign
+{
+    Left, Right, Center
+}
+
+public class TopUI
 {
     private char _emptyHpSymbol = '♡';
     private char _fillHpSymbol = '♥';
@@ -8,6 +13,7 @@
     
     public TopUI(int renderWidth) => _rightAlignPos = renderWidth - 1;
 
+    // 플레이어 HP 랜더링
     public void PlayerHpRender(Hp health)
     {
         // Player Side
@@ -20,10 +26,24 @@
                 _emptyHpSymbol.Print(_playerColor);
         }
     }
+    // 남은 적 수 / 전체 적 수 랜더링
     public void RemainEnemy((int alive, int total) enemyCount)
     {
         string stateString = $"{enemyCount.alive} / {enemyCount.total}"; 
         Console.SetCursorPosition(_rightAlignPos - stateString.Length, 1);
         stateString.Print(_enemyColor);
+    }
+    
+    // Stage 확인
+    public void ViewCurrentStage(TopUiAlign align, int left, int top)
+    {
+        string curStage = $"Stage {SceneManager.StageNumber}";
+        if (align == TopUiAlign.Center) 
+            left -= curStage.Length / 2;
+        else if (align == TopUiAlign.Right)
+            left -= curStage.Length;
+            
+        Console.SetCursorPosition(left, top);
+        curStage.Print(ConsoleColor.Cyan);
     }
 }

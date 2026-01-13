@@ -1,4 +1,5 @@
-﻿public class TitleScene : Scene
+﻿// 타이틀 씬
+public class TitleScene : Scene
 {
     private MenuList _menus;
 
@@ -39,7 +40,6 @@
 
     public override void Render()
     {
-        // 우야출력할래?
         Console.SetCursorPosition(5, 1);
         GameManager.GameName.Print(ConsoleColor.Yellow);
         _menus.Render(5, 4);

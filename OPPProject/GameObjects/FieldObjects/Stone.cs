@@ -1,4 +1,4 @@
-﻿public class Stone : GameObject, ICrashBullet
+﻿public class Stone : GameObject, ICrashBullet, INotPlaceable, IObstacle
 {
     public Stone() => Init();
     public override void Init()

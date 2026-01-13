@@ -1,4 +1,5 @@
-﻿public static class SceneManager
+﻿// Scene 을 일종의 "상태"로 보고 관리하는 클래스. by 김재성 강사님
+public static class SceneManager
 {
     public static Action OnChangeScene;
     public static Scene Current { get; private set; }

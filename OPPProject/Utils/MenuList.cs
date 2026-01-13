@@ -1,4 +1,5 @@
-﻿public class MenuList
+﻿// 기본적인 메뉴 화면 및 선택 기능 by 김재성 강사님
+public class MenuList
 {
     private string _title;
     private List<(string text, Action action)> _menus;
@@ -7,6 +8,7 @@
     private int _maxLength;
     public int CurrentIndex { get { return _currentIndex; } }
 
+    // 메뉴 리스트에 타이틀 추가 할 수 있도록 코드 추가.
     public MenuList(string title = "", params (string, Action)[] menuTexts)
     {
         _title = title;
@@ -100,6 +102,7 @@
         _outline.Y = y;
         _outline.Draw();
 
+        // 타이틀이 있는 경우 타이틀 표기 추가.
         if (_title.Length > 0)
         {
             Console.SetCursorPosition(x + 1, ++y);

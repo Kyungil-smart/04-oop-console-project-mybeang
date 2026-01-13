@@ -1,4 +1,5 @@
-﻿public class StoryScene : Scene
+﻿// 기본 스토리와 조작법 설명 씬
+public class StoryScene : Scene
 {
     private List<string> _storyList = new();
     private List<(string text, ConsoleColor color)> _howToPlayList = new();

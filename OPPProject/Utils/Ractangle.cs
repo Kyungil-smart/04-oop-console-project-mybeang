@@ -1,4 +1,5 @@
-﻿public struct Ractangle
+﻿// 화면내 창 띄워주는 객체. by 김재성 강사님
+public struct Ractangle
 {
     public int X;
     public int Y;

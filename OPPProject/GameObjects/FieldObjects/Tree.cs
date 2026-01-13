@@ -1,4 +1,4 @@
-﻿public class Tree : GameObject, ICrashBullet
+﻿public class Tree : GameObject, ICrashBullet, INotPlaceable, IObstacle
 {
     public Tree() => Init();
     public override void Init()

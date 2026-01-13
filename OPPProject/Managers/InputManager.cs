@@ -1,5 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-
+﻿// 사용자 입력 관리 클래스
 public static class InputManager
 {
     private static ConsoleKey _current;
@@ -18,6 +17,7 @@ public static class InputManager
         ConsoleKey.Q, // 타이틀로 나가기
     };
 
+    // 한 Loop 동안 사용자 입력 키에 대한 유지 및 확인.
     public static bool GetKey(ConsoleKey input)
     {
         return _current == input;
@@ -27,6 +27,7 @@ public static class InputManager
     public static void GetUserInput()
     {
         _current = ConsoleKey.Clear;
+        // 키 버퍼 확인. 별다른 입력이 없으면 Interrupt 없이 지나감. 
         if (Console.KeyAvailable)
         {
             ConsoleKey input = Console.ReadKey().Key;
